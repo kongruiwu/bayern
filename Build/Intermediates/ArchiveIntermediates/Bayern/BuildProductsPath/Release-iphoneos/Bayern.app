@@ -1,0 +1,1 @@
+/Users/wurui/Desktop/Bayern/Build/Intermediates/ArchiveIntermediates/Bayern/InstallationBuildProductsLocation/Applications/Bayern.app
