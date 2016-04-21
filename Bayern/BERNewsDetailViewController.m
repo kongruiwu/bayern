@@ -44,6 +44,7 @@
     } else {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/news/%@?app=1",BER_WEBSITE,self.news_id]];
     }
+    NSLog(@"%@",url);
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
     
     if (self.needFetchNewsData) {
@@ -90,16 +91,6 @@
 }
 
 - (void)doShare {
-//    //设置分享内容
-//    UIImage *shareImage = [BERShareModel sharedInstance].shareImg;
-//    NSString *title = [BERShareModel sharedInstance].shareTitle;
-//    
-//    [UMSocialSnsService presentSnsIconSheetView:self
-//                                         appKey:UmengAppKey
-//                                      shareText:title
-//                                     shareImage:shareImage
-//                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatTimeline,UMShareToWechatSession,UMShareToQQ,UMShareToQzone,nil]
-//                                       delegate:self];
     
     [[AppDelegate sharedInstance].window addSubview:self.shareView];
 }
@@ -150,11 +141,9 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     [self.view showLoadingActivity:YES];
 }
-
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self.view hideLoadWithAnimated:YES];
 }
-
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [self.view hideLoadWithAnimated:YES];
 }

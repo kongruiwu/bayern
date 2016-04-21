@@ -44,7 +44,6 @@
         if (i==0) {
             [btn setTitleColor:[UIColor colorWithHexString:@"e4003a"]
                       forState:UIControlStateNormal];
-            //btn.titleLabel.font=[UIFont boldSystemFontOfSize:TEXTFONTSIZE];
         }
         btn.tag=1000+i;
         [btn addTarget:self action:@selector(headButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -156,14 +155,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

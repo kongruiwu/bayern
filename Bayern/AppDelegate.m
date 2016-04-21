@@ -33,6 +33,8 @@
     self.mainViewController = [[BERMainViewController alloc] init];
     self.window.rootViewController = self.mainViewController;
 
+    
+    [self getConfigInfo];//获取配置信息
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //categories
@@ -83,8 +85,6 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -151,32 +151,22 @@
         //第三方分享设置
         [UMSocialData setAppKey:UmengAppKey];
         
+        //由于苹果审核政策需求，建议大家对未安装客户端平台进行隐藏，在设置QQ、微信AppID之前调用下面的方法
+        [UMSocialConfig hiddenNotInstallPlatforms:nil];
+        [UMSocialConfig setFinishToastIsHidden:YES position:UMSocialiToastPositionCenter];
+        
         //设置微信AppId、appSecret，分享url
         [UMSocialWechatHandler setWXAppId:WXAppId appSecret:WXAppSecret url:WXShareUrl];
         
         //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。若在新浪后台设置我们的回调地址，“http://sns.whalecloud.com/sina2/callback”，这里可以传nil
-        [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+
+        [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:SinaAppId secret:SinaAppSecret RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
         [UMSocialSinaSSOHandler openNewSinaSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
         
         //设置分享到QQ/Qzone的应用Id，和分享url 链接
         [UMSocialQQHandler setQQWithAppId:QQAppId appKey:QQAppSecret url:WXShareUrl];
         
-        //由于苹果审核政策需求，建议大家对未安装客户端平台进行隐藏，在设置QQ、微信AppID之前调用下面的方法
-        [UMSocialConfig hiddenNotInstallPlatforms:nil];
-        [UMSocialConfig setFinishToastIsHidden:YES position:UMSocialiToastPositionCenter];
         
-//        //get umeng device info
-//        Class cls = NSClassFromString(@"UMANUtil");
-//        SEL deviceIDSelector = @selector(openUDIDString);
-//        NSString *deviceID = nil;
-//        if(cls && [cls respondsToSelector:deviceIDSelector]){
-//            deviceID = [cls performSelector:deviceIDSelector];
-//        }
-//        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
-//                                                           options:NSJSONWritingPrettyPrinted
-//                                                             error:nil];
-//        
-//        DLog(@"umeng --- %@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
     });
 }
 
@@ -416,6 +406,40 @@ forRemoteNotification:(NSDictionary *)userInfo
             
         }
     }
+}
+- (void)getConfigInfo{
+
+        NSDictionary *parame=@{
+
+                               };
+        AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+        
+        [manager GET:[BERApiProxy urlWithAction:[self getMainActionName]] parameters:[BERApiProxy paramsWithDataDic:parame action:[self getActionName]] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary * dataDic=[responseObject objectForKey:@"data"];
+            id url1 = dataDic[@"club"];
+            if (url1 != nil) {
+                NSString * barUrlStr = dataDic[@"club"];
+                [[NSUserDefaults standardUserDefaults] setObject:barUrlStr forKey:@"CLUB"];
+            }
+            id url2 = dataDic[@"shop"];
+            if (url2 != nil) {
+                NSString * shopUrlStr = dataDic[@"shop"];
+                [[NSUserDefaults standardUserDefaults] setObject:shopUrlStr forKey:@"SHOP"];
+            }
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+
+        }];
+
+}
+-(NSString *)getActionName
+{
+    return @"menu";
+}
+-(NSString *)getMainActionName
+{
+    return @"page";
 }
 
 @end

@@ -18,10 +18,7 @@
         [self.delegate showLoadView];
     }
     self.leadID=leadgue_id;
-    rec=NO;
-    if ([self.leadID intValue]==9) {
-        rec=[self loadDataWith:self.leadID];
-    }
+
     
     [self creatTabView];
     
@@ -168,9 +165,7 @@
         }
         [self.fixtureTabView reloadData];
        
-        NSLog(@"赛程数据加载成功");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"赛程数据加载失败");
     }];
     if (self.data1Array.count>0) {
         return NO;

@@ -24,7 +24,10 @@
 -(void)initWeb
 {
     UIWebView *web=[[UIWebView alloc]initWithFrame:CGRectMake(0, 0,SCREENWIDTH , SCREENHEIGHT-64)];
-    self.url=@"http://www.vipsxy.com/portal/index.html?open_shiyong=1";
+    self.url=@"http://www.fcbayern.cn/club?app=1";
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"CLUB"] != nil) {
+        self.url=[[NSUserDefaults standardUserDefaults] objectForKey:@"CLUB"];
+    }
     [web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
     web.delegate=self;
     [self.view addSubview:web];

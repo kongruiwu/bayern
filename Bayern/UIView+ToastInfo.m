@@ -24,6 +24,7 @@
 - (void)showLoadingActivity:(BOOL)activity{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
     hud.labelText = @"加载中...";
+//    [hud hide:YES afterDelay:3];
 }
 
 - (void)showInfo:(NSString *)info{

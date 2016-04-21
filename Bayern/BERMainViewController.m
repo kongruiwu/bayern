@@ -199,6 +199,10 @@
             BERShopViewController *ml = [[BERShopViewController alloc] init];
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             ml.url = [NSURL URLWithString:@"http://fcb.tmall.hk"];
+            if ([[NSUserDefaults standardUserDefaults] objectForKey:@"SHOP"] != nil) {
+                NSString * urlStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"SHOP"];
+                ml.url = [NSURL URLWithString:urlStr];
+            }
             self.centerVC = nav;
         }
             break;
