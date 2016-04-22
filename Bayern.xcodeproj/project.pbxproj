@@ -15,6 +15,13 @@
 		5A33098C1B5DE0DD00715638 /* BERFixturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33098A1B5DE0DD00715638 /* BERFixturesViewController.m */; };
 		5A3309911B5DE0FD00715638 /* BERStandingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33098F1B5DE0FD00715638 /* BERStandingsViewController.m */; };
 		5A3309961B5E130500715638 /* UIColor+tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3309951B5E130500715638 /* UIColor+tools.m */; };
+		5A3FA3FC1CC9D24000ED1AFF /* BERFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3FA3FB1CC9D24000ED1AFF /* BERFactory.m */; };
+		5A3FA4401CCA162F00ED1AFF /* YTDeviceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3FA4371CCA162F00ED1AFF /* YTDeviceTest.m */; };
+		5A3FA4411CCA162F00ED1AFF /* YTImageBrowerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3FA4391CCA162F00ED1AFF /* YTImageBrowerController.m */; };
+		5A3FA4421CCA162F00ED1AFF /* YTImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3FA43B1CCA162F00ED1AFF /* YTImageModel.m */; };
+		5A3FA4431CCA162F00ED1AFF /* YTImageScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3FA43D1CCA162F00ED1AFF /* YTImageScroll.m */; };
+		5A3FA4441CCA162F00ED1AFF /* YTNetworkLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3FA43F1CCA162F00ED1AFF /* YTNetworkLoad.m */; };
+		5A3FA44A1CCA2BDE00ED1AFF /* BERShowTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3FA4491CCA2BDE00ED1AFF /* BERShowTextView.m */; };
 		5A9F9AD11BDE48580015C2EC /* LMToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9F9ACA1BDE48580015C2EC /* LMToastView.m */; };
 		5A9F9AD21BDE48580015C2EC /* toast_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A9F9ACC1BDE48580015C2EC /* toast_bg@2x.png */; };
 		5A9F9AD31BDE48580015C2EC /* toast_failure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A9F9ACD1BDE48580015C2EC /* toast_failure@2x.png */; };
@@ -196,6 +203,20 @@
 		5A3309931B5E11A300715638 /* BERHeadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BERHeadFile.h; sourceTree = "<group>"; };
 		5A3309941B5E130500715638 /* UIColor+tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+tools.h"; sourceTree = "<group>"; };
 		5A3309951B5E130500715638 /* UIColor+tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+tools.m"; sourceTree = "<group>"; };
+		5A3FA3FA1CC9D24000ED1AFF /* BERFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BERFactory.h; sourceTree = "<group>"; };
+		5A3FA3FB1CC9D24000ED1AFF /* BERFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BERFactory.m; sourceTree = "<group>"; };
+		5A3FA4361CCA162F00ED1AFF /* YTDeviceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTDeviceTest.h; sourceTree = "<group>"; };
+		5A3FA4371CCA162F00ED1AFF /* YTDeviceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTDeviceTest.m; sourceTree = "<group>"; };
+		5A3FA4381CCA162F00ED1AFF /* YTImageBrowerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTImageBrowerController.h; sourceTree = "<group>"; };
+		5A3FA4391CCA162F00ED1AFF /* YTImageBrowerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTImageBrowerController.m; sourceTree = "<group>"; };
+		5A3FA43A1CCA162F00ED1AFF /* YTImageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTImageModel.h; sourceTree = "<group>"; };
+		5A3FA43B1CCA162F00ED1AFF /* YTImageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTImageModel.m; sourceTree = "<group>"; };
+		5A3FA43C1CCA162F00ED1AFF /* YTImageScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTImageScroll.h; sourceTree = "<group>"; };
+		5A3FA43D1CCA162F00ED1AFF /* YTImageScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTImageScroll.m; sourceTree = "<group>"; };
+		5A3FA43E1CCA162F00ED1AFF /* YTNetworkLoad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTNetworkLoad.h; sourceTree = "<group>"; };
+		5A3FA43F1CCA162F00ED1AFF /* YTNetworkLoad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTNetworkLoad.m; sourceTree = "<group>"; };
+		5A3FA4481CCA2BDE00ED1AFF /* BERShowTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BERShowTextView.h; sourceTree = "<group>"; };
+		5A3FA4491CCA2BDE00ED1AFF /* BERShowTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BERShowTextView.m; sourceTree = "<group>"; };
 		5A9F9AC81BDE48580015C2EC /* LMToastDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMToastDelegate.h; sourceTree = "<group>"; };
 		5A9F9AC91BDE48580015C2EC /* LMToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMToastView.h; sourceTree = "<group>"; };
 		5A9F9ACA1BDE48580015C2EC /* LMToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMToastView.m; sourceTree = "<group>"; };
@@ -545,6 +566,25 @@
 				5A0291881BDC8F54007E01FA /* BERUserManger.m */,
 			);
 			path = singleClass;
+			sourceTree = "<group>";
+		};
+		5A3FA4351CCA162F00ED1AFF /* ACDSee */ = {
+			isa = PBXGroup;
+			children = (
+				5A3FA4361CCA162F00ED1AFF /* YTDeviceTest.h */,
+				5A3FA4371CCA162F00ED1AFF /* YTDeviceTest.m */,
+				5A3FA4381CCA162F00ED1AFF /* YTImageBrowerController.h */,
+				5A3FA4391CCA162F00ED1AFF /* YTImageBrowerController.m */,
+				5A3FA43A1CCA162F00ED1AFF /* YTImageModel.h */,
+				5A3FA43B1CCA162F00ED1AFF /* YTImageModel.m */,
+				5A3FA43C1CCA162F00ED1AFF /* YTImageScroll.h */,
+				5A3FA43D1CCA162F00ED1AFF /* YTImageScroll.m */,
+				5A3FA43E1CCA162F00ED1AFF /* YTNetworkLoad.h */,
+				5A3FA43F1CCA162F00ED1AFF /* YTNetworkLoad.m */,
+				5A3FA4481CCA2BDE00ED1AFF /* BERShowTextView.h */,
+				5A3FA4491CCA2BDE00ED1AFF /* BERShowTextView.m */,
+			);
+			path = ACDSee;
 			sourceTree = "<group>";
 		};
 		5A9F9AC61BDE48580015C2EC /* Toast */ = {
@@ -983,6 +1023,7 @@
 		E5873CFC1B1C5DC2001938CD /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				5A3FA4351CCA162F00ED1AFF /* ACDSee */,
 				5A9F9AC61BDE48580015C2EC /* Toast */,
 				5A3309941B5E130500715638 /* UIColor+tools.h */,
 				5A3309951B5E130500715638 /* UIColor+tools.m */,
@@ -1001,6 +1042,8 @@
 		E5873CFD1B1C5DD5001938CD /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				5A3FA3FA1CC9D24000ED1AFF /* BERFactory.h */,
+				5A3FA3FB1CC9D24000ED1AFF /* BERFactory.m */,
 				E5809FDE1B2565A200F95C72 /* UICategory.h */,
 				E5809FE01B25663800F95C72 /* UIColor+ColorHex.h */,
 				E5809FE11B25663800F95C72 /* UIColor+ColorHex.m */,
@@ -1344,6 +1387,7 @@
 				E515BA581B32EC7E00DB6A33 /* HupuTitleScrollView.m in Sources */,
 				E51F6DC31B30085500F543E0 /* Util_UI.m in Sources */,
 				E5873D151B1C5E90001938CD /* JVFloatingDrawerViewController.m in Sources */,
+				5A3FA4411CCA162F00ED1AFF /* YTImageBrowerController.m in Sources */,
 				8B3F0D371B5F904700F27DDA /* BERStandModel.m in Sources */,
 				5A0291891BDC8F54007E01FA /* BERUserManger.m in Sources */,
 				E5873CB71B1C3849001938CD /* AppDelegate.m in Sources */,
@@ -1388,13 +1432,17 @@
 				E5A85E651B33B9740028A34B /* BERTeamListViewController.m in Sources */,
 				E5873D621B1C5EC9001938CD /* UIImageView+HighlightedWebCache.m in Sources */,
 				E580A0101B25C7C000F95C72 /* BERBaseListViewController.m in Sources */,
+				5A3FA4401CCA162F00ED1AFF /* YTDeviceTest.m in Sources */,
 				8B2872C31B7338FB00C2FE48 /* pushModel.m in Sources */,
 				8B55673B1B678D4E00689F54 /* BERDetailTeamViewController.m in Sources */,
 				E51F6DBF1B30060600F543E0 /* BERNewsDetailViewController.m in Sources */,
 				E515BA511B32E94F00DB6A33 /* BERShopViewController.m in Sources */,
 				E5873D5A1B1C5EC9001938CD /* SDWebImageDownloader.m in Sources */,
+				5A3FA4441CCA162F00ED1AFF /* YTNetworkLoad.m in Sources */,
 				E515BA4E1B32E94000DB6A33 /* BERTeamViewController.m in Sources */,
+				5A3FA4431CCA162F00ED1AFF /* YTImageScroll.m in Sources */,
 				E5873D5D1B1C5EC9001938CD /* SDWebImagePrefetcher.m in Sources */,
+				5A3FA4421CCA162F00ED1AFF /* YTImageModel.m in Sources */,
 				E5809FDD1B2564BF00F95C72 /* UIDevice+IdentifierAddition.m in Sources */,
 				E5873D2C1B1C5EAA001938CD /* AFHTTPSessionManager.m in Sources */,
 				E58F61EF1B36BE950020EEA0 /* TOWebViewController.m in Sources */,
@@ -1424,7 +1472,9 @@
 				E57E0AE81B390EEB00FDBF7D /* NSDictionary+stringClassTransform.m in Sources */,
 				E50FDA3A1B3A57460032B08C /* BERShareModel.m in Sources */,
 				5AFAF4971BDCBC8400B276E0 /* BERRegisterViewController.m in Sources */,
+				5A3FA44A1CCA2BDE00ED1AFF /* BERShowTextView.m in Sources */,
 				E58F61F61B3713F20020EEA0 /* JASidePanelController.m in Sources */,
+				5A3FA3FC1CC9D24000ED1AFF /* BERFactory.m in Sources */,
 				E58F61F71B3713F20020EEA0 /* UIViewController+JASidePanel.m in Sources */,
 				E5873D641B1C5EC9001938CD /* UIView+WebCacheOperation.m in Sources */,
 				E580A00D1B25A73100F95C72 /* BERSettingsViewController.m in Sources */,

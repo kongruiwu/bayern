@@ -8,7 +8,6 @@
 
 #import "BERRightViewController.h"
 #import "BERRightTableViewCell.h"
-#import "BERNewsPictureViewController.h"
 
 @interface BERRightViewController () <UITableViewDataSource, UITableViewDelegate, BERRightTableViewCellDelegate>
 

@@ -14,6 +14,8 @@
 
 #import "BERNewsPicModel.h"
 
+#import "YTImageBrowerController.h"
+
 @interface BERNewsListViewController ()
 
 @end
@@ -53,17 +55,6 @@
 - (void)dealloc {
     DLog(@"dealloc BERHomeListViewController");
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (void)initModel {
     [super initModel];
     self.pagnationNum = 10;
@@ -313,14 +304,19 @@
         [self.navigationController pushViewController:nd animated:YES];
     } else if (self.newsListType == NewsListTypePic) {
         
+        
+        
         if ([cell isKindOfClass:[BERNewsPicCell class]]) {
             [BERShareModel sharedInstance].shareImg = [[(BERNewsPicCell *)cell imgView1] image];
         }
         [NFLAppLogManager sendLogWithEventID:EventID_Photos withKeyName:KN_PhotosList andValueName:@"Photos"];
         
-        BERNewsPictureViewController *nd = [[BERNewsPictureViewController alloc] init];
-        nd.news_id = newdID;
-        [self.navigationController pushViewController:nd animated:YES];
+//        BERNewsPictureViewController *nd = [[BERNewsPictureViewController alloc] init];
+//        nd.news_id = newdID;
+        YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
+        vc.news_id = newdID;
+        vc.titleName = [dic stringValueForKey:@"title"];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

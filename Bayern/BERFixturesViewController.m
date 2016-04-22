@@ -8,7 +8,7 @@
 
 #import "BERFixturesViewController.h"
 #import "BERHeadFile.h"
-#import "BERNewsPictureViewController.h"
+#import "YTImageBrowerController.h"
 @interface BERFixturesViewController ()
 
 @end
@@ -137,9 +137,12 @@
     [BERShareModel sharedInstance].shareID=[NSString stringWithFormat:@"%@",model.album_link];
     [BERShareModel sharedInstance].shareTitle=[NSString stringWithFormat:@"%@",model.league_title];
     [BERShareModel sharedInstance].shareUrl=[[BERShareModel sharedInstance] getShareURL:NO];
-    BERNewsPictureViewController *nd = [[BERNewsPictureViewController alloc] init];
-    nd.news_id = [NSString stringWithFormat:@"%@",model.album_link];
-    [self.navigationController pushViewController:nd animated:YES];
+//    BERNewsPictureViewController *nd = [[BERNewsPictureViewController alloc] init];
+//    nd.news_id = [NSString stringWithFormat:@"%@",model.album_link];
+    YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
+    vc.news_id = [NSString stringWithFormat:@"%@",model.album_link];
+    vc.titleName = [NSString stringWithFormat:@"%@",model.league_title];
+    [self.navigationController pushViewController:vc animated:YES];
     }
 }
 -(void)showLoadView

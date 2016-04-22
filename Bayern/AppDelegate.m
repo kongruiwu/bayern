@@ -10,9 +10,9 @@
 #import "APService.h"
 #import "BERNewsDetailViewController.h"
 #import "BERNavigationController.h"
-#import "BERNewsPictureViewController.h"
 #import "BERVideoPlayerViewController.h"
 #import "BERHeadFile.h"
+#import "YTImageBrowerController.h"
 @interface AppDelegate ()
 
 @end
@@ -118,8 +118,11 @@
         [self.mainViewController showCenterPanelAnimated:YES];
     }else if([self.model.type intValue]==3||[self.model.type isEqualToString:@"photos"])
     {
-        BERNewsPictureViewController *vc=[[BERNewsPictureViewController alloc]init];
-        vc.news_id=self.model.id;
+//        BERNewsPictureViewController *vc=[[BERNewsPictureViewController alloc]init];
+//        vc.news_id=self.model.id;
+        YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
+        vc.news_id = self.model.id;
+        vc.titleName = @"最新战报";
         [NFLAppLogManager sendLogWithEventID:EventID_Photos withKeyName:KN_PhotosList andValueName:@"Photos"];
         [(BERNavigationController *)controller pushViewController:vc animated:NO];
         [self.mainViewController showCenterPanelAnimated:YES];
@@ -292,9 +295,10 @@
      UIViewController *controller = self.mainViewController.centerPanel;
     if ([controller isKindOfClass:[BERNavigationController class]])
     {
-        BERNewsPictureViewController *pv=[[BERNewsPictureViewController alloc]init];
-        pv.news_id=picLik;
-        [(BERNavigationController *)controller pushViewController:pv animated:NO];
+        YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
+        vc.news_id = picLik;
+        vc.titleName = @"最新战报";
+        [(BERNavigationController *)controller pushViewController:vc animated:NO];
         
         [self.mainViewController showCenterPanelAnimated:YES];
     }
@@ -391,16 +395,14 @@ forRemoteNotification:(NSDictionary *)userInfo
             [self.mainViewController showCenterPanelAnimated:YES];
         }else if([self.model.type intValue]==3||[self.model.type isEqualToString:@"photos"])
         {
-            BERNewsPictureViewController *vc=[[BERNewsPictureViewController alloc]init];
-            vc.news_id=self.model.id;
+            YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
+            vc.news_id = self.model.id;
+            vc.titleName = @"最新战报";
             [NFLAppLogManager sendLogWithEventID:EventID_Photos withKeyName:KN_PhotosList andValueName:@"Photos"];
             [(BERNavigationController *)controller pushViewController:vc animated:NO];
             [self.mainViewController showCenterPanelAnimated:YES];
         }
-//        else if([self.model.type intValue]==4)
-//        {
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.model.url]];
-//        }
+
         else
         {
             

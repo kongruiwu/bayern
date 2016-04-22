@@ -202,9 +202,11 @@
         [self.scrollViewBG addSubview:sc];
         
         __block UIImageView *coverImg = icon;
+        NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BER_IMAGE_HOST, [self.newsDataArray objectAtIndex:i][@"pic"]]];
+        NSLog(@"url == %@",url);
         if ([BERNetworkManager isNetworkOkay]) {
             [icon showInfo:@"图片加载中，请稍后" activity:YES];
-            [icon sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BER_IMAGE_HOST, [self.newsDataArray objectAtIndex:i][@"pic"]]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [icon sd_setImageWithURL:url completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 coverImg.contentMode = UIViewContentModeScaleAspectFit;
                 [coverImg hideLoadWithAnimated:YES];
                 coverImg.image = image;

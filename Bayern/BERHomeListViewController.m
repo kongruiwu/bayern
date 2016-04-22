@@ -12,7 +12,8 @@
 #import "BERAdvCell.h"
 #import "BERListFocusView.h"
 #import "BERNewsDetailViewController.h"
-#import "BERNewsPictureViewController.h"
+//#import "BERNewsPictureViewController.h"
+#import "YTImageBrowerController.h"
 #import "BERShopViewController.h"
 #import "BERNewsPicModel.h"
 
@@ -511,9 +512,11 @@
         }
         [NFLAppLogManager sendLogWithEventID:EventID_Index withKeyName:KN_List andValueName:@"Photos"];
         
-        BERNewsPictureViewController *nd = [[BERNewsPictureViewController alloc] init];
-        nd.news_id = newdID;
-        [self.navigationController pushViewController:nd animated:YES];
+//        BERNewsPictureViewController *nd = [[BERNewsPictureViewController alloc] init];
+        YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
+        vc.news_id = newdID;
+        vc.titleName = shareTitle;
+        [self.navigationController pushViewController:vc animated:YES];
     }else if([self isNewsTypeWithIndex:indexPath.row]==9)
     {
         if ([cell isKindOfClass:[BERNewsVideoCell class]]) {
