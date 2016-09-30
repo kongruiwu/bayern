@@ -7,8 +7,7 @@
 //
 
 #import "BERRootViewController.h"
-#import "BERFixtureListView.h"
 
-@interface BERFixturesViewController : BERRootViewController<UIScrollViewDelegate,BERFixturetListDelegate>
-@property (nonatomic,retain)NSArray *titleArr;
+@interface BERFixturesViewController : BERRootViewController
+
 @end

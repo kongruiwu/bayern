@@ -9,7 +9,5 @@
 #import "BERRootViewController.h"
 
 @interface BERStandingsViewController : BERRootViewController
-@property(nonatomic,retain)NSMutableArray *dataArray;
-@property(nonatomic,retain)NSMutableArray *data1Array;
-@property(nonatomic,retain)NSArray *NavArray;
+
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "BERRootViewController.h"
-#import "BERLoginTableViewCell.h"
-@interface BERSettingsViewController : BERRootViewController<BERLoginDelegate>
+@interface BERSettingsViewController : BERRootViewController
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NFLShareView.h"
-
+#import "Factory.h"
 typedef NS_ENUM (NSUInteger, RTSelectorBackType) {
     RTSelectorBackTypePopBack = 0,
     RTSelectorBackTypeDismiss,
@@ -26,8 +26,11 @@ typedef NS_ENUM (NSUInteger, RTSelectorBackType) {
 - (void)drawTitle:(NSString *)title;
 - (void)drawBackButton;
 - (void)drawShareButton;
-
+- (void)drawMainTabItemWithSearchItem;
 - (void)doBack;
 - (void)doShare;
+- (void)setBackGroundImage;
 
+- (void)setNavAlpha;
+- (void)setNavUnAlpha;
 @end

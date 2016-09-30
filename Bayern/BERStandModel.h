@@ -28,5 +28,5 @@
 @property(nonatomic,retain)NSNumber *team_id;
 @property(nonatomic,copy)NSString *team_logo;
 @property(nonatomic,retain)NSNumber *win;
-@property(nonatomic) BOOL isBer;
+@property(nonatomic,assign) BOOL isBer;
 @end

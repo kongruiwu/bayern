@@ -9,16 +9,19 @@
 #import "YTImageBrowerController.h"
 #import "YTImageScroll.h"
 #import "BERShowTextView.h"
+#import "BERDownLoadView.h"
 #import "BERFactory.h"
 #define Page_Lab_H  14.0f
 #define Page_Scale  (4.9f/5.0f)
-@interface YTImageBrowerController ()<UIScrollViewDelegate,UMSocialUIDelegate>
+@interface YTImageBrowerController ()<UIScrollViewDelegate,UMSocialUIDelegate,BERDownLoadViewDelegate>
 {
     NSInteger currentPageNumber,currentIndex;
     CGFloat priopPointX; // scrollView 划过的前一个点x坐标
     YTImageScroll * currentScroll;
     CGFloat angle;
     NSMutableArray * dataArray;
+    CGFloat earlyPointY;//获取上次手势的y值 计算此次descview移动的上下距离
+    CGFloat changeYvalue;//如果描述文字过多，这个值是多出部分的值
 }
 
 @property (nonatomic, assign) id<YTImageBrowerControllerDelegate> delegate;
@@ -27,6 +30,7 @@
 @property (nonatomic, strong) UILabel * pageLabel;
 @property (nonatomic, strong) BERShowTextView * descView;
 @property (nonatomic, strong) NSMutableArray * imgScrolls;
+@property (nonatomic, strong) BERDownLoadView * downLoadView;
 
 @end
 
@@ -173,19 +177,35 @@
 }
 
 - (void)addPageLabel{//添加 显示当前页码和总的页码UI
-//    self.pageLabel = [[UILabel alloc]init];
-//    self.pageLabel.textAlignment = NSTextAlignmentCenter;
-//    self.pageLabel.font = [UIFont systemFontOfSize:12.0f];
-//    self.pageLabel.textColor = [UIColor whiteColor];
-//    self.pageLabel.text = [self pageText];
+    self.downLoadView = [[BERDownLoadView alloc]initWithFrame:CGRectMake(0,SCREENHEIGHT - 40 - 64, SCREENWIDTH, 40)];
+    self.downLoadView.delegate = self;
+    self.downLoadView.backgroundColor = [UIColor colorWithHexString:@"000000" alpha:0.2];
+    self.downLoadView.hidden = YES;
+    self.downLoadView.pageLable.text = [self pageText];
+    [self.view addSubview:self.downLoadView];
+    
     self.descView = [[BERShowTextView alloc]initWithFrame:CGRectMake(0, SCREENHEIGHT* 2/3, SCREENWIDTH, SCREENHEIGHT/3)];
     self.descView.backgroundColor = [UIColor colorWithHexString:@"000000" alpha:0.5];
     self.descView.pageLable.text = [self pageText];
     self.descView.titleLabel.text = self.titleName;
-    self.descView.descLabel.text = dataArray[currentPageNumber][@"title"];
+    NSString * desc =dataArray[currentPageNumber][@"title"];
+    self.descView.descLabel.text = desc;
+//    [self descViewAddGesWithString:desc];
     [self.view addSubview:self.descView];
 }
+- (void)changeDescViewFrame:(UIPanGestureRecognizer *)ges{
+    CGPoint lastPoint = [ges translationInView:self.descView];
+    if (-lastPoint.y>changeYvalue) {
+        self.descView.center = CGPointMake(self.descView.center.x, self.descView.center.y-changeYvalue);
+    }else{
+        self.descView.center = CGPointMake(self.descView.center.x, self.descView.center.y+lastPoint.y - earlyPointY);
+    }
+    earlyPointY = lastPoint.y;
 
+    if (ges.state == UIGestureRecognizerStateEnded) {
+        earlyPointY = 0;
+    }
+}
 - (void)addGesture{//添加单击返回,双击缩放手势
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
     [self.view addGestureRecognizer:tap];
@@ -226,40 +246,48 @@
 
 - (void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
-    
     self.scrollView.frame = self.view.bounds;
     
     CGSize size = self.scrollView.bounds.size;
     size.width *= self.imgModels.count;
     self.scrollView.contentSize = size;
     
-//    CGRect frame = self.view.bounds;
-//    frame.origin.y = (frame.size.height * Page_Scale) - Page_Lab_H;
-//    frame.size.height = Page_Lab_H;
     CGFloat y =SCREENHEIGHT*2/3;
+    CGFloat y1 = 64;
     if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeLeft || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeRight) {
         y = SCREENHEIGHT*7/10;
+        y1 = 30;
     }
     CGRect frame = CGRectMake(0, y, SCREENWIDTH, SCREENHEIGHT - y);
     self.descView.frame = frame;
-    
+    self.downLoadView.frame = CGRectMake(0, SCREENHEIGHT - 40 -y1, SCREENWIDTH, 40);
     [self scrollViewLayoutSubViews];
 }
 
 #pragma mark - Tap Gesture Recognizer action (手势)
 - (void)tapAction:(UITapGestureRecognizer*)tap{
-    [self delegateWillDismiss];
-    [self dismissViewControllerAnimated:NO completion:nil];
+    BOOL rec =self.descView.hidden;
+    if (rec) {
+        self.view.backgroundColor = [UIColor whiteColor];
+        self.descView.hidden = NO;
+        self.downLoadView.hidden = YES;
+    }else{
+        self.view.backgroundColor = [UIColor blackColor];
+        self.descView.hidden = YES;
+        self.downLoadView.hidden = NO;
+    }
 }
 
 - (void)doubleTapAction:(UITapGestureRecognizer*)doubleTap{
     [currentScroll doubleTapAction];
 }
 
+
 #pragma mark - Scroll View Deledate (scroll 代理)
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (!scrollView.isDragging) return;
     [self scrollViewDragging:scrollView];
+    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
@@ -271,6 +299,7 @@
             [sc replyStatuseAnimated:NO];
         }
     }
+    
     [self pageHiden];
 }
 
@@ -292,13 +321,41 @@
     NSInteger integer = pointx+0.5;
     if (integer != currentPageNumber) {
         currentPageNumber = integer;
+        self.downLoadView.pageLable.text = [self pageText];
         self.descView.pageLable.text = [self pageText];
         self.descView.titleLabel.text = self.titleName;
-        self.descView.descLabel.text = dataArray[currentPageNumber][@"title"];
-//        self.pageLabel.text = [self pageText];
+        NSString * desc =dataArray[currentPageNumber][@"title"];
+        self.descView.descLabel.text = desc;
+        [self.descView layoutSubviews];
+//        [self descViewAddGesWithString:desc];
     }
     priopPointX = scrollView.contentOffset.x;
 }
+//- (void)descViewAddGesWithString:(NSString *)desc{
+//    CGFloat y = [self getDescLabelFrameWithString:desc];
+//    if (y>0) {
+//        CGRect frame = self.descView.frame;
+//        self.descView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height+y);
+//        UIPanGestureRecognizer * upGes = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(changeDescViewFrame:)];
+//        earlyPointY = 0;
+//        [self.descView addGestureRecognizer:upGes];
+//    }
+//}
+//- (CGFloat)getDescLabelFrameWithString:(NSString *)str{
+//    NSLog(@"%f",self.descView.frame.size.height);
+//    CGSize size = [BERFactory getSize:str maxSize:CGSizeMake(SCREENWIDTH - 20, 9999) font:[UIFont systemFontOfSize:14.0f]];
+//    CGFloat y =SCREENHEIGHT*2/3;
+//    if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeLeft || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeRight) {
+//        y = SCREENHEIGHT*7/10;
+//    }
+//    y = SCREENHEIGHT - y;
+//    if (size.height < y - 50) {
+//        return 0;
+//    }else{
+//        changeYvalue = size.height - y + 50;
+//        return size.height - y + 50;
+//    }
+//}
 - (NSString*)pageText{
     return [NSString stringWithFormat:@"%d/%d",(int)(currentPageNumber+1),(int)(self.imgModels.count)];
 }
@@ -328,6 +385,12 @@
 
 #pragma mark - Page & Delegate Action (嗯哼...)
 - (void)pageHiden{
+    CGFloat y =SCREENHEIGHT*2/3;
+    if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeLeft || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeRight) {
+        y = SCREENHEIGHT*7/10;
+    }
+    CGRect frame = CGRectMake(0, y, SCREENWIDTH, SCREENHEIGHT - y);
+    self.descView.frame = frame;
     
 }
 
@@ -455,6 +518,18 @@
     self.shareView = nil;
 }
 
-
+- (BOOL)downLoadImage{
+    UIImageWriteToSavedPhotosAlbum([currentScroll.imgView image], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    return YES;
+}
+-(void)image:(UIImage*)image didFinishSavingWithError:(NSError*)error contextInfo:(void*)contextInfo
+{
+    if (error) {
+        UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"无法访问相册" message:@"请在iPhone的“设置-隐私-照片”中允许访问您的照片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
+    }else{
+        [ToastView presentToastWithin:self.view withIcon:APToastIconSuccess text:@"保存成功" duration:1.0f];
+    }
+}
 
 @end

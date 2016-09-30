@@ -117,7 +117,7 @@
     if (!self.lineView) {
         UIView *lineV = [[UIView alloc] initWithFrame:CGRectZero];
         self.lineView = lineV;
-        lineV.backgroundColor = [UIColor bayernRedColor];
+        lineV.backgroundColor = COLOR_MAIN_RED;
         [self addSubview:self.lineView];
     }
     
@@ -140,7 +140,7 @@
         UILabel *titleLb = self.titleLabelArray[i];
         
         if (btn.tag == index) {
-            titleLb.textColor = [UIColor bayernRedColor];
+            titleLb.textColor = COLOR_MAIN_RED;
             titleLb.font = [UIFont systemFontOfSize:title_Font_Select];
             
             self.lineView.frame = CGRectMake(btnGap/2, btn.frame.size.height - 2, btn.frame.size.width, 2);

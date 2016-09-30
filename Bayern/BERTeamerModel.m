@@ -9,7 +9,13 @@
 #import "BERTeamerModel.h"
 
 @implementation BERTeamerModel
--(void)setValue:(id)value forUndefinedKey:(NSString *)key{
-
+- (instancetype)initWithDictionary:(NSDictionary *)Dictionary{
+    self = [super initWithDictionary:Dictionary];
+    if(self){
+        self.teamerTitles = @[@"出生日期",@"出生地点",@"星座",@"身高/体重/鞋码",@"婚姻状况",@"学历"];
+        NSString * info = [NSString stringWithFormat:@"%@/%@/%@",self.height,self.weight,self.shoesize];
+        self.teamerDescs = @[self.birthday,self.birthplace,self.zodiac,info,self.family,self.edu];
+    }
+    return self;
 }
 @end

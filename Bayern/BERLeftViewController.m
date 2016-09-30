@@ -7,8 +7,10 @@
 //
 
 #import "BERLeftViewController.h"
+#import "UserCenterViewController.h"
 #import "BERLeftTableViewCell.h"
-
+#import "Factory.h"
+#import "LeftHeadCell.h"
 static const CGFloat kJVTableViewTopInset = 80.0;
 
 @interface BERLeftViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -17,42 +19,40 @@ static const CGFloat kJVTableViewTopInset = 80.0;
 @property (nonatomic, strong) NSArray *iconArray;
 @property (nonatomic, strong) NSArray *contentArray;
 @property (nonatomic, strong) UITableView *listTableView;
-
 @end
 
 @implementation BERLeftViewController
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self updateHeadCell];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"111");
+    });
     // Do any additional setup after loading the view.
     
-    self.titleArray = [NSArray arrayWithObjects:@"首   页",@"新   闻",@"图   片", @"视   频",@"赛   程",@"积   分",@"球   队",@"俱乐部", @"商   店", @"设   置",nil];
-    self.contentArray = [NSArray arrayWithObjects:@"Home",@"News",@"Photos", @"Videos",@"Fixtures",@"Standings",@"Team", @"Club", @"Fan Shop",@"Settings",nil];
-    self.iconArray = [NSArray arrayWithObjects:@"home",@"news",@"photos",@"videos", @"fixtures",@"standings",@"team", @"club",@"shop",@"setup",nil];
+    self.titleArray = [NSArray arrayWithObjects:@"",@"首   页",@"新   闻",@"图   片", @"视   频",@"赛   程",@"积   分",@"球   队",@"俱乐部", @"商   店", @"设   置",nil];
+    self.contentArray = [NSArray arrayWithObjects:@"",@"Home",@"News",@"Photos", @"Videos",@"Fixtures",@"Standings",@"Team", @"Club", @"Fan Shop",@"Settings",nil];
+    self.iconArray = [NSArray arrayWithObjects:@"",@"home",@"news",@"photos",@"videos", @"fixtures",@"standings",@"team", @"club",@"shop",@"setup",nil];
     
     self.listTableView.contentInset = UIEdgeInsetsMake(kJVTableViewTopInset, 0.0, 0.0, 0.0);
     [self.view addSubview:self.listTableView];
-    
     //默认选中第一行
-    [self.listTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self.listTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
     
     self.view.backgroundColor = [UIColor clearColor];
 }
-
+-(void)updateHeadCell{
+    [self.listTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - UITableViewDataSource / UITableViewDelegate
 
@@ -61,6 +61,9 @@ static const CGFloat kJVTableViewTopInset = 80.0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return Anno750(210);
+    }
     return LeftCellHeight;
 }
 
@@ -70,7 +73,15 @@ static const CGFloat kJVTableViewTopInset = 80.0;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellStr = @"cell";
-    
+    static NSString * headCell = @"HeadCell";
+    if (indexPath.row == 0) {
+        LeftHeadCell * cell = [tableView dequeueReusableCellWithIdentifier:headCell];
+        if (cell == nil) {
+            cell = [[LeftHeadCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:headCell];
+        }
+        [cell updateStatus];
+        return cell;
+    }
     BERLeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellStr];
     if (cell == nil) {
         cell = [[BERLeftTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellStr];
@@ -103,5 +114,6 @@ static const CGFloat kJVTableViewTopInset = 80.0;
     
     return _listTableView;
 }
+
 
 @end

@@ -7,11 +7,14 @@
 //
 
 #import "BERRightViewController.h"
-#import "BERRightTableViewCell.h"
-
-@interface BERRightViewController () <UITableViewDataSource, UITableViewDelegate, BERRightTableViewCellDelegate>
+#import "LeftRootScoreTableViewCell.h"
+#import "RootScoreHeadCell.h"
+#import "RootRihtTabViewCell.h"
+#import "TeamRankModel.h"
+@interface BERRightViewController () <UITableViewDataSource, UITableViewDelegate, RootRihtTabViewCellDelegate>
 
 @property (nonatomic, strong) NSMutableArray *contentArray;
+@property (nonatomic, strong) NSMutableArray * teamRanks;
 @property (nonatomic, strong) UITableView *listTableView;
 
 @end
@@ -24,43 +27,13 @@
     
     self.view.backgroundColor = [UIColor blackColor];
     self.contentArray = [NSMutableArray array];
-    
+    self.teamRanks = [NSMutableArray new];
     [self.view addSubview:self.listTableView];
     
-    CGFloat originX = (1- [BERMainCenter sharedInstance].sliderPercentage) * WindowWidth;
-    
-    //set header
-    CGFloat headerH = STATUS_BAR_H + NAV_BAR_H;
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(originX, 0, self.sliderWidth, headerH)];
-    header.backgroundColor = [UIColor blackColor];
-    
-    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(originX, (headerH - 20)/2+3, self.sliderWidth, 20)];
-    titleLb.backgroundColor = [UIColor clearColor];
-    titleLb.text = @"比赛中心";
-    titleLb.font = [UIFont systemFontOfSize:18];
-    titleLb.textColor = [UIColor colorWithHex:0xe4003a alpha:1];
-    titleLb.textAlignment = NSTextAlignmentCenter;
-    [header addSubview:titleLb];
-    
-    [self.listTableView setTableHeaderView:header];
-    
     [self request];
+    [self teamRankRequest];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - Request Method
 
@@ -70,9 +43,6 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:[BERApiProxy urlWithAction:@"match"] parameters:[BERApiProxy paramsWithDataDic:@{} action:@"lastSchedules"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //
-       // DLog(@"~~~~~lastSchedules response [%@]", responseObject);
-        
         NSDictionary *dic = (NSDictionary *)responseObject;
         if ([dic[@"code"] integerValue] == 0) {
             
@@ -81,87 +51,179 @@
             if (dataArr.count > 0) {
                 
                 for (int i = 0; i < dataArr.count; i ++) {
-                    [listDataArray addObject:dataArr[i]];
+                    HomeGameModel * model = [[HomeGameModel alloc]initWithDictionary:dataArr[i]];
+                    [listDataArray addObject:model];
                 }
                 
-            } else {
-                
             }
-            
             [tableView reloadData];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //
+    }];
+}
+
+- (void)teamRankRequest{
+    __weak BERRightViewController * weakSelf = self;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:[BERApiProxy urlWithAction:@"match"] parameters:[BERApiProxy paramsWithDataDic:@{} action:@"right_team_rank"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = (NSDictionary *)responseObject;
+        if ([dic[@"code"] integerValue] == 0) {
+            NSArray *dataArr = dic[@"data"];
+            if (dataArr.count > 0) {
+                for (int i = 0; i < dataArr.count; i ++) {
+                    TeamRankModel * model = [[TeamRankModel alloc]initWithDictionary:dataArr[i]];
+                    [weakSelf.teamRanks addObject:model];
+                }
+            }
+            [weakSelf.listTableView reloadData];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
 }
 
 #pragma mark - UITableViewDataSource / UITableViewDelegate
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 64;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section == 1) {
+        return Anno750(120);
+    }
+    return 0.01;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    NSString * title = @"比赛中心";
+    if (section == 1) {
+        title = @"积分榜";
+    }
+    UIView * headView = [Factory creatViewWithColor:[UIColor clearColor]];
+    headView.frame = CGRectMake(0, 0, SCREENWIDTH * 0.75, 64);
+    UILabel * titleLabel = [Factory creatLabelWithTitle:title textColor:COLOR_MAIN_RED
+                                               textFont:font750(30) textAlignment:NSTextAlignmentCenter];
+    titleLabel.font = [UIFont boldSystemFontOfSize:font750(32)];
+    [headView addSubview:titleLabel];
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(@0);
+        make.centerY.equalTo(@(10));
+    }];
+    UIView * line = [Factory creatViewWithColor:COLOR_MAIN_RED];
+    [headView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(@0);
+        make.height.equalTo(@1);
+    }];
+    return headView;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if(section == 1){
+        UIView * footer = [Factory creatViewWithColor:[UIColor clearColor]];
+        UIButton * button = [Factory creatButtonWithTitle:@"查看完整积分榜"
+                                                 textFont:Anno750(30) titleColor:COLOR_MAIN_RED backGroundColor:[UIColor clearColor]];
+        [button addTarget:self action:@selector(goGameScoreView) forControlEvents:UIControlEventTouchUpInside];
+        button.layer.cornerRadius = Anno750(30);
+        button.layer.borderColor = COLOR_MAIN_RED.CGColor;
+        button.layer.borderWidth = 1.0f;
+        [footer addSubview:button];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.centerY.equalTo(@0);
+            make.height.equalTo(@(Anno750(60)));
+            make.width.equalTo(@(Anno750(340)));
+        }];
+        
+        footer.frame = CGRectMake(0, 0, Anno750(650), Anno750(90));
+        return footer;
+    }
+    return nil;
+}
+- (void)goGameScoreView{
+    [[[AppDelegate sharedInstance] mainViewController] setCenterVCWithIndex:6];
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.contentArray.count;
+    if (section == 0) {
+        return self.contentArray.count;
+    }
+    return self.teamRanks.count +1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return RightCellHeight;
+    if (indexPath.section == 0) {
+        return Anno750(400);
+    }else{
+        return Anno750(100);
+    }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellStr = @"cell";
     
-    BERRightTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellStr];
-    if (cell == nil) {
-        cell = [[BERRightTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellStr];
-        cell.backgroundColor = [UIColor clearColor];
+    if (indexPath.section == 0) {
+        static NSString *cellStr = @"cell";
+        
+        RootRihtTabViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellStr];
+        if (cell == nil) {
+            cell = [[RootRihtTabViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
+        }
+        HomeGameModel * model = self.contentArray[indexPath.row];
+        [cell updateWithHomeGameModel:model];
         cell.delegate = self;
+        return cell;
     }
-    
-    cell.index = indexPath.row;
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell configureCell:self.contentArray[indexPath.row]];
-    
-    if (indexPath.row < self.contentArray.count -1) {
-        [cell showCellLineWithHeight:RightCellHeight color:[UIColor colorWithHex:0x999999 alpha:1]];
+    static NSString * scorecell=  @"scorecell";
+    static NSString * headCell = @"headCell";
+    if (indexPath.row == 0) {
+        RootScoreHeadCell * cell = [tableView dequeueReusableCellWithIdentifier:headCell];
+        if (cell == nil) {
+            cell = [[RootScoreHeadCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:headCell];
+        }
+        return cell;
     }
-    
+    LeftRootScoreTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:scorecell];
+    if (cell == nil) {
+        cell = [[LeftRootScoreTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:scorecell];
+    }
+    TeamRankModel * model = self.teamRanks[indexPath.row - 1];
+    [cell updateWithTeamRankModel:model];
     return cell;
 }
 
 #pragma mark - 
-
-- (void)BERRightTableViewCellGameButtonClick:(NSInteger)index {
-    NSDictionary *dic = self.contentArray[index];
-    NSString *newsLink = [dic stringValueForKey:@"news_link"];
+- (void)RootRightCellPicBtnClick:(UIButton *)btn{
+    UITableViewCell * cell = (UITableViewCell *)[[btn superview] superview];
+    NSIndexPath * index = [self.listTableView indexPathForCell:cell];
+    HomeGameModel * model = self.contentArray[index.row];
+    NSString *picLink = [NSString stringWithFormat:@"%@",model.album_link];
+    NSString *shareTitle = model.league_title;
+    [BERShareModel sharedInstance].shareTitle=shareTitle;
+    [BERShareModel sharedInstance].shareID=picLink;
+    [BERShareModel sharedInstance].shareUrl=[[BERShareModel sharedInstance]getShareURL:NO];
+    [[AppDelegate sharedInstance] pushPicWithPicLink:picLink andTitle:shareTitle];
+}
+- (void)RootRightCellNewsBtnClick:(UIButton *)btn{
+    UITableViewCell * cell = (UITableViewCell *)[[btn superview] superview];
+    NSIndexPath * index = [self.listTableView indexPathForCell:cell];
+    HomeGameModel * model = self.contentArray[index.row];
+    NSString *newsLink = [NSString stringWithFormat:@"%@",model.news_link];
     
-    NSString *shareTitle = [dic stringValueForKey:@"league_title"];
+    NSString *shareTitle = model.league_title;
     if (shareTitle.length == 0 || shareTitle == nil) {
         shareTitle = @"";
     }
     [BERShareModel sharedInstance].shareTitle = shareTitle;
     [BERShareModel sharedInstance].shareID = newsLink;
-    
     [[AppDelegate sharedInstance] pushNewsWithNewsLink:newsLink];
+
 }
--(void)BERRightTableViewCellPicButtonClick:(NSInteger)index
-{
-    NSDictionary *dic = self.contentArray[index];
-    NSString *picLink = [dic stringValueForKey:@"album_link"];
-    NSString *shareTitle = [dic stringValueForKey:@"league_title"];
-    [BERShareModel sharedInstance].shareTitle=shareTitle;
-    [BERShareModel sharedInstance].shareID=picLink;
-    [BERShareModel sharedInstance].shareUrl=[[BERShareModel sharedInstance]getShareURL:NO];
-    [[AppDelegate sharedInstance] pushPicWithPicLink:picLink];
-}
+
 #pragma mark - Getter Method
 
 - (UITableView *)listTableView {
     if (!_listTableView) {
-        _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, WindowWidth, WindowHeight) style:UITableViewStylePlain];
+        _listTableView = [[UITableView alloc] initWithFrame:CGRectMake(Anno750(100), 0, WindowWidth - Anno750(100), WindowHeight) style:UITableViewStyleGrouped];
         _listTableView.backgroundColor = [UIColor colorWithRed:0.13 green:0.13 blue:0.13 alpha:1];
         _listTableView.delegate = self;
         _listTableView.dataSource = self;

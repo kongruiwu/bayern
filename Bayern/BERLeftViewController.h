@@ -10,4 +10,5 @@
 
 @interface BERLeftViewController : BERRootViewController
 
+-(void)updateHeadCell;
 @end

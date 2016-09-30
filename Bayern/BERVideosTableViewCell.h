@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BERVideosModel.h"
-
+#import "SearchResultModel.h"
 @interface BERVideosTableViewCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIView *lineView;
 @property (strong, nonatomic) IBOutlet UIImageView *IconImage;
@@ -18,4 +18,5 @@
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
 -(void)cellConfigUIWithModel:(BERVideosModel *)model;
+- (void)updateWithModel:(SearchResultModel *)model;
 @end

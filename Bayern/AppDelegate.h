@@ -31,6 +31,6 @@
 - (void)toggleRightDrawer:(id)sender animated:(BOOL)animated;
 
 - (void)pushNewsWithNewsLink:(NSString *)newsLink;
-- (void)pushPicWithPicLink:(NSString *)picLik;
+- (void)pushPicWithPicLink:(NSString *)picLik andTitle:(NSString *)title;
 @end
 

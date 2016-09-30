@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9CE279147A1060D0FB8AB8DEC09704238EAE2389",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "66B082725E98CF071BEF4AB33F6878A73482DAC0" : 9223372036854775807,
+    "9CE279147A1060D0FB8AB8DEC09704238EAE2389" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0B5F017B-6E97-4786-A807-35682DA3FF2C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "66B082725E98CF071BEF4AB33F6878A73482DAC0" : "bayern1\/Bayern\/HMSegmentedControl\/",
+    "9CE279147A1060D0FB8AB8DEC09704238EAE2389" : "bayern1\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Bayern",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Bayern.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/HeshamMegid\/HMSegmentedControl.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "66B082725E98CF071BEF4AB33F6878A73482DAC0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kongruiwu\/bayern.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9CE279147A1060D0FB8AB8DEC09704238EAE2389"
+    }
+  ]
+}

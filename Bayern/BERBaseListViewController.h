@@ -7,7 +7,7 @@
 //
 
 #import "AFLoadingCell.h"
-
+#import "SearchViewController.h"
 #define listPageSize 20 //每次请求的列表条目数
 #define loadMoreOffset 35 //加载更多列表条目的滑动触发距离
 

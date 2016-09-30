@@ -7,7 +7,7 @@
 //
 
 #import "BERRootViewController.h"
-
+#import "SearchViewController.h"
 @interface BERRootViewController ()
 
 @end
@@ -80,7 +80,17 @@
     UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"game"] style:UIBarButtonItemStyleBordered target:self action:@selector(rightDidScroll)];
     self.navigationItem.rightBarButtonItem = item2;
 }
-
+- (void)drawMainTabItemWithSearchItem {
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"item"] style:UIBarButtonItemStyleBordered target:self action:@selector(leftDidScroll)];
+    self.navigationItem.leftBarButtonItem = item;
+    
+    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"game"] style:UIBarButtonItemStyleBordered target:self action:@selector(rightDidScroll)];
+    UIBarButtonItem *item3 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_search"] style:UIBarButtonItemStyleBordered target:self action:@selector(searchBtnSelect)];
+    self.navigationItem.rightBarButtonItems = @[item2,item3];
+}
+- (void)searchBtnSelect{
+    [self.navigationController pushViewController:[SearchViewController new] animated:YES];
+}
 - (void)drawBackButton {
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back_2"] style:UIBarButtonItemStylePlain target:self action:@selector(doBack)];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -143,6 +153,28 @@
     }
     
     return _shareView;
+}
+
+- (void)setBackGroundImage{
+    UIImageView * imageView = [Factory creatImageViewWithImageName:@"groundImage"];
+    [self.view addSubview:imageView];
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(@0);
+    }];
+}
+- (void)setNavAlpha{
+    self.navigationController.navigationBar.translucent = YES;
+    UIView * clearView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 20)];
+    [self.view addSubview:clearView];
+    //    导航栏变为透明
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:0];
+    //    让黑线消失的方法
+    self.navigationController.navigationBar.shadowImage=[UIImage new];
+}
+- (void)setNavUnAlpha{
+    self.navigationController.navigationBar.translucent = NO;
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:0];
+    self.navigationController.navigationBar.shadowImage = nil;
 }
 
 @end

@@ -8,18 +8,14 @@
 
 #import "BERSettingsViewController.h"
 #import "BERSettingTableViewCell.h"
-#import "BERLoginTableViewCell.h"
-#import "BERLoginViewController.h"
-#import "BERRegisterViewController.h"
-#import "BERUserManger.h"
 #import "BERHeadFile.h"
+#import "ChangePasswordVC.h"
 #define SetUpCellHeight 45
 
 @interface BERSettingsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *titleArray;
 @property (nonatomic, strong) UITableView *listTableView;
-@property (nonatomic, strong) UIButton  * logOutBtn;
 
 @end
 
@@ -27,25 +23,16 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.listTableView reloadData];
-    if ([BERUserManger shareMangerUserInfo].isLogin) {
-        self.logOutBtn.hidden = NO;
-    }else{
-        self.logOutBtn.hidden = YES;
-    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     [self drawMainTabItem];
     [self drawTitle:@"设置"];
     
     [self initModel];
     [self initDisplay];
-    
-    [self creatLogOutBtn];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,32 +45,12 @@
     DLog(@"dealloc BERSetupListViewController");
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-- (void)creatLogOutBtn{
-    UIView * bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.listTableView.frame.size.width, 60)];
-    bgView.backgroundColor = [UIColor clearColor];
-    UIButton * logOutBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, bgView.frame.size.width - 20, 40) RedBackGroundColorAndTitle:@"退出"];
-    [bgView addSubview:logOutBtn];
-    [logOutBtn addTarget:self action:@selector(userLogoutBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    self.logOutBtn = logOutBtn;
-    self.listTableView.tableFooterView = bgView;
-    
-}
 
 #pragma mark - Private Method
 
 - (void)initModel {
 
-    self.titleArray = [NSArray arrayWithObjects:@"清除缓存", @"版本",@"消息通知", nil];
+    self.titleArray = [NSArray arrayWithObjects:@"修改密码",@"清除缓存", @"版本",@"消息通知", nil];
 }
 
 - (void)initDisplay {
@@ -106,19 +73,12 @@
 #pragma mark - UITableViewDataSource / UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1  ;
-    }else if(section == 1){
-        return self.titleArray.count;
-    }
-    return 0;
+    return self.titleArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return 120  ;
-    }else if(indexPath.section == 1){
-        if (indexPath.row==2) {
+    if(indexPath.section == 0){
+        if (indexPath.row==3) {
             return 65.0f;
         }
         return SetUpCellHeight;
@@ -130,22 +90,10 @@
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellStr = @"cell";
-    static NSString *cellLogin = @"loginCell";
-    
-    if (indexPath.section == 0) {
-        BERLoginTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellLogin   ];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"BERLoginTableViewCell" owner:self options:nil] lastObject];
-        }
-        [cell configCell];
-        cell.delegate = self;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }
     
     UIView *line = nil;
     
@@ -169,7 +117,12 @@
     cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
     cell.detailTextLabel.textColor = [UIColor colorWithHex:0x999999 alpha:1];
     
-    if (indexPath.row == 0) {
+    if (indexPath.row == 1) {
+        
+        line = [[UIView alloc] initWithFrame:CGRectMake(0,0, WindowWidth, 0.5)];
+        line.backgroundColor = [UIColor colorWithHex:0xeeeeee alpha:1];
+        [cell.contentView addSubview:line];
+        
         CGFloat cachefileSize = [self cachefileSize];
         
         if(cachefileSize<1.0){
@@ -177,13 +130,13 @@
         }else{
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2f MB", self.cachefileSize];
         }
-    } else if (indexPath.row == 1) {
+    } else if (indexPath.row == 2) {
         NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"v%@", appVersion];
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
 
-    if (indexPath.row==2) {
+    if (indexPath.row==3) {
         BERSettingTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:cellStr];
         if (cell==nil) {
             cell=[[[NSBundle mainBundle] loadNibNamed:@"BERSettingTableViewCell" owner:self options:nil] lastObject];
@@ -237,9 +190,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0:
+            {
+                [self.navigationController pushViewController:[ChangePasswordVC new] animated:YES];
+            }
+                break;
+            case 1:
             {
                 [self.view showInfo:@"正在清理中..." activity:YES];
                 __weak __typeof(self) weakSelf = self;
@@ -262,20 +220,5 @@
         }
     }
     
-}
-- (void)presentRegisterViewController{
-    BERRegisterViewController * vc = [[BERRegisterViewController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)presentLoginViewController{
-    BERLoginViewController * vc = [[BERLoginViewController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (void)userLogoutBtnClick{
-    [[BERUserManger shareMangerUserInfo] userLogOut];
-    
-    [self.listTableView reloadData];
 }
 @end

@@ -168,10 +168,16 @@
 #pragma mark 长按手势
 -(void)longPressAction:(UILongPressGestureRecognizer*)longPress{
     if (longPress.state == UIGestureRecognizerStateBegan) {
-        if ([YTDeviceTest userAuthorizationStatus]) {
-            UIActionSheet * actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存到手机", nil];
-            [actionSheet showInView:self];
-        }
+//        if ([YTDeviceTest userAuthorizationStatus]) {
+//            UIActionSheet * actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存到手机", nil];
+//            [actionSheet showInView:self];
+//        }
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"存储照片成功"
+//                                                        message:@"您已将照片存储于图片库中，打开照片程序即可查看。"
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//        [alert show];
     }
 }
 

@@ -19,7 +19,6 @@
     [self drawBackButton];
     [self drawTitle:@"视频"];
     [self setShareData];
-    // Do any additional setup after loading the view.
 }
 -(void)doShare
 {

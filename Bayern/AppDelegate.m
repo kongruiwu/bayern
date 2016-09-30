@@ -13,6 +13,7 @@
 #import "BERVideoPlayerViewController.h"
 #import "BERHeadFile.h"
 #import "YTImageBrowerController.h"
+#import "IQKeyboardManager.h"
 @interface AppDelegate ()
 
 @end
@@ -24,7 +25,10 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    [self getUserInfo];
+    
+    [self registIQKeyBoard];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -72,14 +76,22 @@
     NSDictionary *remoteNotification = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
     self.reseverInfo=[NSDictionary dictionaryWithDictionary:remoteNotification];
     
-    [self getUserInfo];//获取用户信息
     return YES;
 }
-- (void)getUserInfo{
-    
-    [[BERUserManger shareMangerUserInfo] getInfo];
-    
+- (void)registIQKeyBoard{
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+    [IQKeyboardManager sharedManager].shouldShowTextFieldPlaceholder = NO;
 }
+
+-(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler{
+    //根据Item对应的type标识处理对应的点击操作
+    NSString *itemType = shortcutItem.type;
+    if([@"item1" isEqualToString:itemType]){
+        
+    }    
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
    
 }
@@ -118,8 +130,6 @@
         [self.mainViewController showCenterPanelAnimated:YES];
     }else if([self.model.type intValue]==3||[self.model.type isEqualToString:@"photos"])
     {
-//        BERNewsPictureViewController *vc=[[BERNewsPictureViewController alloc]init];
-//        vc.news_id=self.model.id;
         YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
         vc.news_id = self.model.id;
         vc.titleName = @"最新战报";
@@ -131,7 +141,24 @@
     //防错
     }
 }
-
+- (void)getUserInfo{
+    NSNumber * userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
+    NSLog(@"%@",userID);
+    if (userID && userID.intValue>0) {
+        NSDictionary * params = @{@"uid":[NSString stringWithFormat:@"%@",userID]};
+        AFHTTPRequestOperationManager *manger=[AFHTTPRequestOperationManager manager];
+        [manger GET:[BERApiProxy urlWithAction:@"user"] parameters:[BERApiProxy paramsWithDataDic:params action:@"profile"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dic=(NSDictionary *)responseObject;
+            if ([dic[@"code"] intValue] == 0) {
+                NSDictionary * data = dic[@"data"];
+                [[UserInfo defaultInfo] setKeyValueForKeyWithDictionary:data];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+    }
+    
+}
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
@@ -290,14 +317,14 @@
         [self.mainViewController showCenterPanelAnimated:YES];
     }
 }
--(void)pushPicWithPicLink:(NSString *)picLik
+-(void)pushPicWithPicLink:(NSString *)picLik andTitle:(NSString *)title
 {
      UIViewController *controller = self.mainViewController.centerPanel;
     if ([controller isKindOfClass:[BERNavigationController class]])
     {
         YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
         vc.news_id = picLik;
-        vc.titleName = @"最新战报";
+        vc.titleName = title;
         [(BERNavigationController *)controller pushViewController:vc animated:NO];
         
         [self.mainViewController showCenterPanelAnimated:YES];

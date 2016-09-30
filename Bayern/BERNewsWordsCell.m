@@ -83,7 +83,15 @@
     self.contentLabel.text = dic[@"content"];
     
     self.timeLabel.text = [NSString reformForListTimeShowWithDate:dic[@"date"]];//dic[@"date"];
-
 }
-
+- (void)updateWithModel:(SearchResultModel *)model{
+    [self cleanCellShow];
+    NSString *requestURL = [NSString stringWithFormat:@"%@%@", BER_IMAGE_HOST, model.pic];
+    [self.imgView sd_setImageWithURL:[NSURL URLWithString:requestURL] placeholderImage:[UIImage imageNamed:@"news_defult"]];
+    
+    self.titleLabel.text = model.title;
+    self.contentLabel.text = model.content;
+    
+    self.timeLabel.text = [NSString reformForListTimeShowWithDate:model.date];//dic[@"date"];
+}
 @end

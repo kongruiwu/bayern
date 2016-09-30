@@ -8,19 +8,38 @@
 
 #import "BERNewsDetailViewController.h"
 #import "Util_UI.h"
-
-@interface BERNewsDetailViewController () <UIWebViewDelegate, UMSocialUIDelegate>
+#import "CommentTextView.h"
+#import "CommentViewController.h"
+#import "PrentLoginViewController.h"
+#import "BERNavigationController.h"
+#import "CommentView.h"
+#import "NewsDetailModel.h"
+#import "VoteDetailModel.h"
+@interface BERNewsDetailViewController () <UIWebViewDelegate, UMSocialUIDelegate,UITextViewDelegate>
 
 @property (nonatomic, strong) UIWebView *webView;
 
+@property (nonatomic, strong) UIView * blackView;
+@property (nonatomic, strong) UIButton * commentCount;
+@property (nonatomic, strong) CommentView * commentView;
+@property (nonatomic, assign) BOOL commentSuccess;
+@property (nonatomic, strong) NewsDetailModel * model;
+@property (nonatomic, strong) VoteDetailModel * vote;
+@property (nonatomic, strong) UIImage * shareImage;
+@property (nonatomic, strong) UIImage * shareIamge2;
 @end
 
 @implementation BERNewsDetailViewController
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self registerNotification];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self removeNotification];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     NSString *title = @"新闻";
@@ -28,11 +47,8 @@
         title = @"图片";
     }
     [self drawTitle:title];
-    
-    
-    if ([BERShareModel sharedInstance].shareID.length > 0) {
-        [self drawShareButton];
-    }
+
+    [self drawShareButton];
     
     [self initModel];
     [self initDisplay];
@@ -44,17 +60,45 @@
     } else {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/news/%@?app=1",BER_WEBSITE,self.news_id]];
     }
-    NSLog(@"%@",url);
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+    [self creatCommentTextf];
+    [self getNewsDetail];
     
-    if (self.needFetchNewsData) {
-        [self getNews];
-    }
+    
 }
-
+- (void)drawShareButton{
+    UIView * leftView = [Factory creatViewWithColor:[UIColor clearColor]];
+    leftView.frame = CGRectMake(0, 0, Anno750(250), 44);
+    UIButton * shareButton = [Factory creatButtonWithNormalImage:@"share" selectImage:nil];
+    [shareButton addTarget:self action:@selector(doShare) forControlEvents:UIControlEventTouchUpInside];
+    [leftView addSubview:shareButton];
+    [shareButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(Anno750(40)));
+        make.width.equalTo(@(Anno750(35)));
+        make.right.equalTo(@0);
+        make.centerY.equalTo(@0);
+    }];
+    self.commentCount = [Factory creatButtonWithTitle:@"" textFont:font750(24) titleColor:[UIColor whiteColor]
+                                      backGroundColor:[UIColor clearColor]];
+    [self.commentCount setImage:[UIImage imageNamed:@"statusbar_talk"] forState:UIControlStateNormal];
+    [self.commentCount addTarget:self action:@selector(pushTocommentViewController) forControlEvents:UIControlEventTouchUpInside];
+    [leftView addSubview:self.commentCount];
+    [self.commentCount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(shareButton.mas_left).offset(-Anno750(20));
+        make.centerY.equalTo(@0);
+    }];
+    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftView];
+    self.navigationItem.rightBarButtonItem = leftItem;
+}
+- (void)pushTocommentViewController
+{
+    CommentViewController * vc = [[CommentViewController alloc]init];
+    vc.newsID = self.news_id;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 - (void)dealloc {
@@ -63,15 +107,7 @@
     DLog(@"dealloc BERNewsDetailViewController");
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - Private Method
 
@@ -80,7 +116,8 @@
 }
 
 - (void)initDisplay {
-    self.webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    CGRect frame = CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGH - Anno750(80));
+    self.webView = [[UIWebView alloc] initWithFrame:frame];
     self.webView.delegate = self;
     self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.webView.backgroundColor = [UIColor clearColor];
@@ -88,52 +125,35 @@
     self.webView.contentMode = UIViewContentModeRedraw;
     self.webView.opaque = YES;
     [self.view addSubview:self.webView];
+
+    
+    
 }
 
 - (void)doShare {
-    
+    [self setShareDataWithNews:YES];
     [[AppDelegate sharedInstance].window addSubview:self.shareView];
 }
-
+- (void)htmlShare{
+    [self setShareDataWithNews:NO];
+    [[AppDelegate sharedInstance].window addSubview:self.shareView];
+}
 #pragma mark - Request 
 
-- (void)getNews {
-    NSDictionary *params = @{
-                            @"id"  :   self.news_id
-                            };
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[BERApiProxy urlWithAction:@"news"] parameters:[BERApiProxy paramsWithDataDic:params action:@"get_detail"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //
-        DLog(@"~~~~~news response [%@]", responseObject);
-        
-        NSDictionary *dic = (NSDictionary *)responseObject;
-        if ([dic[@"code"] integerValue] == 0) {
-            
-            NSDictionary *dataDic = dic[@"data"];
-            
-            if (dataDic.count > 0) {
-                [self setShareData:dataDic];
-            }
-        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-}
 
-- (void)setShareData:(NSDictionary *)dataDic {
-    //set share data
-    [BERShareModel sharedInstance].shareTitle = dataDic[@"title"];
-    
-    UIImageView *imgView = [[UIImageView alloc] init];
-    __block UIImageView *coverImg = imgView;
-    [imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BER_IMAGE_HOST, dataDic[@"pic"]]] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        coverImg.image = image;
-        [BERShareModel sharedInstance].shareImg = coverImg.image;
-        
-        [self drawShareButton];
-    }];
+
+
+- (void)setShareDataWithNews:(BOOL)rec{
+    if (rec) {
+        [BERShareModel sharedInstance].shareTitle = self.model.title;
+        [BERShareModel sharedInstance].shareID = [NSString stringWithFormat:@"%@",self.model.id];
+        [BERShareModel sharedInstance].shareImg = self.shareImage;
+        [BERShareModel sharedInstance].shareUrl = [[BERShareModel sharedInstance] getShareURL:YES];
+    }else{
+        [BERShareModel sharedInstance].shareTitle = self.vote.share_title;
+        [BERShareModel sharedInstance].shareUrl = self.vote.share_link;
+        [BERShareModel sharedInstance].shareImg = self.shareIamge2;
+    }
 }
 
 #pragma mark - UIWebViewDelegate
@@ -147,7 +167,28 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [self.view hideLoadWithAnimated:YES];
 }
-
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSString * requestString = [NSString stringWithFormat:@"%@",request];
+    if ([requestString containsString:@"fcbayern:"]) {
+        if ([requestString containsString:@"vote_share"]) {
+            NSArray * arr = [requestString componentsSeparatedByString:@"&"];
+            for (NSString * str in arr) {
+                if ([str containsString:@"vid"]) {
+                    NSArray * params = [str componentsSeparatedByString:@"="];
+                    [self.view showLoadWithAnimated:YES];
+                    [self getVoteDeatilWithvoteid:params.lastObject];
+                }
+            }
+        }else if([requestString containsString:@"login"]){
+            BERNavigationController * nvc = [[BERNavigationController alloc]initWithRootViewController:[PrentLoginViewController new]];
+            [self presentViewController:nvc animated:YES completion:nil];
+        }else if([requestString containsString:@"news_more_commnet"]){
+            [self pushTocommentViewController];
+        }
+        return NO;
+    }
+    return YES;
+}
 #pragma mark - UMSocialDelegate
 
 - (void)didSelectSocialPlatform:(NSString *)platformName withSocialData:(UMSocialData *)socialData {
@@ -191,13 +232,15 @@
 
 #pragma mark - NFLShareDelegate
 
+
+
 - (void)shareButtonDidClickWithType:(ShareType)ShareType {
-    
+ 
     NSArray *shareArr = nil;
     
     //设置分享内容
     UIImage *shareImage = [BERShareModel sharedInstance].shareImg;
-    NSString *gameUrl = [[BERShareModel sharedInstance] getShareURL:YES];
+    NSString *gameUrl = [BERShareModel sharedInstance].shareUrl;
     NSString *title = [BERShareModel sharedInstance].shareTitle;
     
     if (ShareType == ShareTypeWeibo) {
@@ -246,5 +289,194 @@
     [self.shareView removeFromSuperview];
     self.shareView = nil;
 }
+- (void)creatCommentTextf{
+    UIView * footerView = [Factory creatViewWithColor:COLOR_BACKGROUND];
+    footerView.frame = CGRectMake(0, SCREENHEIGH - Anno750(80) - 64, SCREENWIDTH, Anno750(80));
+    [self.view addSubview:footerView];
+    
+    UIView * whiteView = [Factory creatViewWithColor:[UIColor whiteColor]];
+    whiteView.layer.cornerRadius = Anno750(30);
+    [footerView addSubview:whiteView];
+    [whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(Anno750(30)));
+        make.right.equalTo(@(-Anno750(30)));
+        make.centerY.equalTo(@0);
+        make.height.equalTo(@(Anno750(60)));
+    }];
+    UIImageView * icon = [Factory creatImageViewWithImageName:@"comment"];
+    [whiteView addSubview:icon];
+    [icon mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(Anno750(20)));
+        make.height.with.equalTo(@(Anno750(25)));
+        make.centerY.equalTo(@0);
+    }];
+    UILabel * label = [Factory creatLabelWithTitle:@"评论"
+                                         textColor:COLOR_CONTENT_GRAY_6 textFont:font750(28) textAlignment:NSTextAlignmentLeft];
+    [footerView addSubview:label];
+    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(icon.mas_right).offset(Anno750(20));
+        make.centerY.equalTo(@0);
+    }];
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(presentKeyBoard)];
+    [footerView addGestureRecognizer:tap];
+
+    self.commentView = [[CommentView alloc]init];
+    self.commentView.frame = CGRectMake(0, SCREENHEIGH, SCREENWIDTH, Anno750(250));
+    [self.commentView.commitButton addTarget:self action:@selector(commitComment) forControlEvents:UIControlEventTouchUpInside];
+    self.commentView.textView.delegate = self;
+}
+
+- (void)commitComment{
+    if ([UserInfo defaultInfo].uid && [[UserInfo defaultInfo].uid intValue]>0) {
+        [self.commentView startLoading:YES];
+        [self addCommentRequest];
+        
+    }else{
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"登陆提示" message:@"你好，请登陆后发表你的回复，我们期待你参与讨论！" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * login = [UIAlertAction actionWithTitle:@"登陆" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            BERNavigationController * nav = [[BERNavigationController alloc]initWithRootViewController:[PrentLoginViewController new]];
+            [self.navigationController presentViewController:nav animated:YES completion:nil];
+        }];
+        UIAlertAction * cannce = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:login];
+        [alert addAction:cannce];
+        [self.navigationController presentViewController:alert animated:YES completion:nil];
+    }
+}
+- (void)addCommentRequest{
+    [self.view showLoadWithAnimated:YES];
+    
+    NSString * userid = [NSString stringWithFormat:@"%@",[UserInfo defaultInfo].uid];
+    NSString * token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+    NSDictionary * params = @{
+                              @"nid":self.news_id,
+                              @"uid":userid,
+                              @"callback_verify":token,
+                              @"content":self.commentView.textView.text
+                              };
+    
+    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+    __weak BERNewsDetailViewController * weakSelf = self;
+    [manager GET:[BERApiProxy urlWithAction:@"news"] parameters:[BERApiProxy paramsWithDataDic:params action:@"add_comment"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = (NSDictionary *)responseObject;
+        [self.commentView startLoading:NO];
+        if ([dic[@"code"] integerValue] == 0) {
+            self.commentSuccess = YES;
+            [self.commentView.textView endEditing:YES];
+        }
+        [weakSelf.view hideLoadWithAnimated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [weakSelf.view hideLoadWithAnimated:YES];
+        [self.commentView startLoading:NO];
+    }];
+    
+}
+- (void)getVoteDeatilWithvoteid:(NSString *)voteid{
+    NSString * userid;
+    if ([UserInfo defaultInfo].uid){
+        userid = [NSString stringWithFormat:@"%@",[UserInfo defaultInfo].uid];
+    }else{
+        userid = @"0";
+    }
+    NSDictionary * params = @{
+                              @"id":voteid,
+                              @"uid":userid
+                              };
+    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+    __weak BERNewsDetailViewController * weakSelf = self;
+    [manager GET:[BERApiProxy urlWithAction:@"other"] parameters:[BERApiProxy paramsWithDataDic:params action:@"get_vote"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = (NSDictionary *)responseObject;
+        if ([dic[@"code"] integerValue] == 0) {
+            weakSelf.vote = [[VoteDetailModel alloc]initWithDictionary:dic[@"data"]];
+            weakSelf.shareIamge2 = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:weakSelf.vote.share_pic]]];
+            [weakSelf.view hideLoadWithAnimated:YES];
+            [weakSelf htmlShare];
+        }else{
+            [weakSelf.view hideLoadWithAnimated:YES];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [weakSelf.view hideLoadWithAnimated:YES];
+    }];
+}
+
+- (void)getNewsDetail{
+    NSDictionary * params = @{
+                              @"id":self.news_id,
+                              };
+    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+    __weak BERNewsDetailViewController * weakSelf = self;
+    [manager GET:[BERApiProxy urlWithAction:@"news"] parameters:[BERApiProxy paramsWithDataDic:params action:@"get_detail"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = (NSDictionary *)responseObject;
+        
+        if ([dic[@"code"] integerValue] == 0) {
+            NSDictionary * data = dic[@"data"];
+            NewsDetailModel * model = [[NewsDetailModel alloc]initWithDictionary:data];
+            [weakSelf.commentCount setTitle:[NSString stringWithFormat:@"%@",model.comment_count] forState:UIControlStateNormal];
+            self.model = model;
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                self.shareImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:model.pic]]];
+            });
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
+- (void)creatBlackView{
+    self.blackView = [Factory creatViewWithColor:COLOR_BACK_ALPHA_8];
+    self.blackView.hidden = YES;
+    [self.navigationController.view addSubview:self.blackView];
+    [self.blackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(@0);
+    }];
+    [self.blackView addSubview:self.commentView];
+}
+- (void)presentKeyBoard{
+    self.blackView.hidden = NO;
+    self.commentView.textView.text = @"";
+    [self.commentView.textView becomeFirstResponder];
+}
+- (void)textViewDidChange:(UITextView *)textView{
+    if (textView.text.length>0) {
+        [self.commentView.textView showAllUI:YES];
+    }else{
+        [self.commentView.textView showAllUI:NO];
+    }
+}
+- (void)registerNotification{
+    [self creatBlackView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHidden:) name:UIKeyboardWillHideNotification object:nil];
+
+}
+- (void)removeNotification{
+    [self.blackView removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+- (void)keyBoardWillShow:(NSNotification *)noti{
+    NSDictionary *info = [noti userInfo];
+    CGFloat time = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    [UIView animateWithDuration:time animations:^{
+        self.commentView.frame = CGRectMake(0, SCREENHEIGH -Anno750(250)-kbSize.height, SCREENWIDTH, Anno750(250));
+    }];
+}
+- (void)keyboardWillHidden:(NSNotification *)noti{
+    NSDictionary *info = [noti userInfo];
+    CGFloat time = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    [UIView animateWithDuration:time animations:^{
+        self.commentView.frame = CGRectMake(0, SCREENHEIGH, SCREENWIDTH, Anno750(250));
+    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.blackView.hidden = YES;
+        if (self.commentSuccess) {
+            [ToastView presentToastWithin:self.view withIcon:APToastIconNone text:@"评论发表成功!"
+                                 duration:1.0f completion:^{
+                                     self.commentSuccess = NO;
+        }];
+        }
+    });
+}
+
 
 @end

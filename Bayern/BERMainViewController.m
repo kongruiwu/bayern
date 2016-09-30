@@ -9,7 +9,7 @@
 #import "BERMainViewController.h"
 #import "BERNavigationController.h"
 
-#import "BERLeftViewController.h"
+
 #import "BERRightViewController.h"
 
 #import "BERHomeListViewController.h"
@@ -19,18 +19,21 @@
 #import "BERShopViewController.h"
 #import "BERTeamViewController.h"
 
-//第一次增加
 #import "BERFixturesViewController.h"
 #import "BERVideoListViewController.h"
 #import "BERStandingsViewController.h"
 #import "BERClubViewController.h"
 
+#import "HomePageViewController.h"
+#import "LoginViewController.h"
+#import "UserCenterViewController.h"
+
 @interface BERMainViewController ()
 
-@property (nonatomic, strong) BERLeftViewController *leftVC;
+
 @property (nonatomic, strong) BERRightViewController *rightVC;
 
-@property (nonatomic, strong) BERNavigationController *centerVC;
+@property (nonatomic, strong) UINavigationController *centerVC;
 
 @property NSInteger lastIndex;
 @property BOOL inited; //yes表示非首次加载，no为首次加载
@@ -54,17 +57,17 @@
     
     //设置滑动距离
     CGFloat sliderPercentage = [[BERMainCenter sharedInstance] sliderPercentage];
-    
+    CGFloat rightSlider = (float)650/750;
     [self setLeftGapPercentage:sliderPercentage];
-    [self setRightGapPercentage:sliderPercentage];
+    [self setRightGapPercentage:rightSlider];
     
     self.bouncePercentage = 0.1;
     self.bounceOnCenterPanelChange = NO;
     
     self.lastIndex = -1;
-    
+    [[AppDelegate sharedInstance] toggleLeftDrawer:self animated:NO];
     [[AppDelegate sharedInstance] toggleRightDrawer:self animated:NO];
-    [self setCenterVCWithIndex:0];
+    [self setCenterVCWithIndex:1];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,29 +102,32 @@
 - (void)setCenterVCWithIndex:(NSInteger)index {
     switch (index) {
         case 0:
-            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabIndex"];
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabUserInfo"];
             break;
         case 1:
-            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabNews"];
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabIndex"];
             break;
         case 2:
-            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabPhotos"];
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabNews"];
             break;
         case 3:
-            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabVideos"];
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabPhotos"];
             break;
         case 4:
-            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabFixtures"];
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabVideos"];
+            break;
         case 5:
-            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabStandings"];
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabFixtures"];
         case 6:
-            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabTeam"];
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabStandings"];
         case 7:
-            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabClub"];
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabTeam"];
         case 8:
+            [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabClub"];
+        case 9:
             [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabShop"];
             break;
-        case 9:
+        case 10:
             [NFLAppLogManager sendLogWithEventID:EventID_Topbar withKeyName:KN_MainNav andValueName:@"TabSettings"];
             break;
         default:
@@ -137,15 +143,23 @@
     switch (index) {
         case 0:
         {
-            BERHomeListViewController *ml = [[BERHomeListViewController alloc] init];
+            UIViewController * ml;
+            NSNumber * userID = [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"];
+            if (userID && userID.intValue>0) {
+                ml = [[UserCenterViewController alloc]init];
+            }else{
+                ml = [[LoginViewController alloc]init];
+            }
+//            UserCenterViewController *
+//            LoginViewController *
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             self.centerVC = nav;
         }
             break;
+
         case 1:
         {
-            BERNewsListViewController *ml = [[BERNewsListViewController alloc] init];
-            ml.newsListType = NewsListTypeNews;
+            HomePageViewController *ml = [[HomePageViewController alloc] init];
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             self.centerVC = nav;
         }
@@ -153,40 +167,48 @@
         case 2:
         {
             BERNewsListViewController *ml = [[BERNewsListViewController alloc] init];
-            ml.newsListType = NewsListTypePic;
+            ml.newsListType = NewsListTypeNews;
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             self.centerVC = nav;
         }
             break;
         case 3:
         {
-            BERVideoListViewController *ml = [[BERVideoListViewController alloc] init];
+            BERNewsListViewController *ml = [[BERNewsListViewController alloc] init];
+            ml.newsListType = NewsListTypePic;
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             self.centerVC = nav;
         }
             break;
         case 4:
         {
-            BERFixturesViewController *ml = [[BERFixturesViewController alloc] init];
+            BERVideoListViewController *ml = [[BERVideoListViewController alloc] init];
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             self.centerVC = nav;
         }
             break;
         case 5:
         {
-            BERStandingsViewController *ml = [[BERStandingsViewController alloc] init];
+            BERFixturesViewController *ml = [[BERFixturesViewController alloc] init];
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             self.centerVC = nav;
         }
             break;
         case 6:
         {
-            BERTeamViewController *ml = [[BERTeamViewController alloc] init];
+            BERStandingsViewController *ml = [[BERStandingsViewController alloc] init];
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             self.centerVC = nav;
         }
             break;
         case 7:
+        {
+            BERTeamViewController *ml = [[BERTeamViewController alloc] init];
+            BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
+            self.centerVC = nav;
+        }
+            break;
+        case 8:
         {
             BERClubViewController *ml = [[BERClubViewController alloc] init];
             ml.url=@"http://www.fcbayern.cn/club?app=1";
@@ -194,7 +216,7 @@
             self.centerVC = nav;
         }
             break;
-        case 8:
+        case 9:
         {
             BERShopViewController *ml = [[BERShopViewController alloc] init];
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
@@ -206,13 +228,14 @@
             self.centerVC = nav;
         }
             break;
-        case 9:
+        case 10:
         {
             BERSettingsViewController *ml = [[BERSettingsViewController alloc] init];
             BERNavigationController *nav = [[BERNavigationController alloc] initWithRootViewController:ml];
             self.centerVC = nav;
         }
             break;
+        
         default:
             break;
     }

@@ -126,5 +126,36 @@
 
     }
 }
-
+- (void)updateWithModel:(SearchResultModel *)model{
+    [self cleanCellShow];
+    self.titleLabel.text = model.title;
+    self.timeLabel.text = [NSString reformForListTimeShowWithDate:model.date];//dic[@"date"];
+    
+    NSArray *picArr =model.thmub;
+    
+    for (int i = 0; i < picArr.count; i ++) {
+        NSString *requestURL = [NSString stringWithFormat:@"%@%@", BER_IMAGE_HOST, picArr[i]];
+        switch (i) {
+            case 0:
+            {
+                [self.imgView1 sd_setImageWithURL:[NSURL URLWithString:requestURL] placeholderImage:[UIImage imageNamed:@"photos_defult"]];
+            }
+                break;
+            case 1:
+            {
+                [self.imgView2 sd_setImageWithURL:[NSURL URLWithString:requestURL] placeholderImage:[UIImage imageNamed:@"photos_defult"]];
+            }
+                break;
+            case 2:
+            {
+                [self.imgView3 sd_setImageWithURL:[NSURL URLWithString:requestURL] placeholderImage:[UIImage imageNamed:@"photos_defult"]];
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+    }
+}
 @end

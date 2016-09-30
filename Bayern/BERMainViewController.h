@@ -7,9 +7,9 @@
 //
 
 #import "JASidePanelController.h"
-
+#import "BERLeftViewController.h"
 @interface BERMainViewController : JASidePanelController
-
+@property (nonatomic, strong) BERLeftViewController *leftVC;
 - (void)setCenterVCWithIndex:(NSInteger)index;
 
 @end

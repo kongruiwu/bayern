@@ -64,4 +64,37 @@
     }
     self.tagLabel.text=tagStr;
 }
+- (void)updateWithModel:(SearchResultModel *)model{
+    self.nameLabel.text=model.title;
+    [self.IconImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",BER_IMAGE_HOST,model.pic]] placeholderImage:nil];
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *currentTime = [formatter stringFromDate:[NSDate date]];
+    NSString *currDay=[currentTime substringToIndex:10];
+    NSString *matcDay=[model.date substringToIndex:10];
+    NSString *currTime=[model.date substringToIndex:16];
+    NSString *lastTime=[model.date substringToIndex:10];
+    if ([currDay isEqualToString:matcDay]) {
+        self.timeLabel.text=[currTime substringFromIndex:11];
+    }else
+    {
+        self.timeLabel.text=[lastTime substringFromIndex:5];
+    }
+    NSString *tagStr=[[NSString alloc]init];
+    if (model.tags.count<1) {
+        tagStr=@"";
+    }else if (model.tags.count<2){
+        tagStr=[NSString stringWithFormat:@"%@",model.tags[0]];
+    }else if(model.tags.count<3)
+    {
+        tagStr=[NSString stringWithFormat:@"%@  %@",model.tags[0],model.tags[1]];
+    }else if(model.tags.count<4)
+    {
+        tagStr=[NSString stringWithFormat:@"%@  %@  %@",model.tags[0],model.tags[1],model.tags[2]];
+    }else
+    {
+        tagStr=[NSString stringWithFormat:@"%@  %@  %@",model.tags[0],model.tags[1],model.tags[2]];
+    }
+    self.tagLabel.text=tagStr;
+}
 @end

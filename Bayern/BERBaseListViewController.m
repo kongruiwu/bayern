@@ -238,9 +238,12 @@
     
     UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"game"] style:UIBarButtonItemStyleBordered target:self action:@selector(rightDidScroll)];
     [item2 setBackButtonBackgroundImage:[UIImage imageNamed:@"game"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    self.navigationItem.rightBarButtonItem = item2;
+    UIBarButtonItem *item3 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_search"] style:UIBarButtonItemStyleBordered target:self action:@selector(searchBtnSelect)];
+    self.navigationItem.rightBarButtonItems = @[item2,item3];
 }
-
+- (void)searchBtnSelect{
+    [self.navigationController pushViewController:[SearchViewController new] animated:YES];
+}
 #pragma mark - Selector Method
 
 - (void)leftDidScroll {

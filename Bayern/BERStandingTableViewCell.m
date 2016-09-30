@@ -7,12 +7,13 @@
 //
 
 #import "BERStandingTableViewCell.h"
-
+#import "Factory.h"
 @implementation BERStandingTableViewCell
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self creatUI];
     }
     return self;
@@ -74,7 +75,7 @@
 -(void)configUIWithModel:(BERStandModel *)model
 {
     if (model.isBer) {
-        self.contentView.backgroundColor=[UIColor colorWithHexString:@"e4003a"];
+        self.contentView.backgroundColor= COLOR_MAIN_RED;
         rankLabel.textColor=[UIColor whiteColor];
         nameLabel.textColor=[UIColor whiteColor];
         winLabel.textColor=[UIColor whiteColor];
@@ -82,7 +83,7 @@
         lostLabel.textColor=[UIColor whiteColor];
         hitLabel.textColor=[UIColor whiteColor];
         scoreLabel.textColor=[UIColor whiteColor];
-        lineView.backgroundColor=[UIColor colorWithHexString:@"e4003a"];
+        lineView.backgroundColor=COLOR_MAIN_RED;
     }else
     {
         self.contentView.backgroundColor=[UIColor whiteColor];
@@ -97,12 +98,13 @@
     }
     rankLabel.text=[NSString stringWithFormat:@"%@",model.rank_index];
     [iconImg sd_setImageWithURL:[NSURL URLWithString:model.team_logo] placeholderImage:nil];
-    nameLabel.text=[NSString stringWithFormat:@"%@",model.known_name_zh];
+    nameLabel.text=[NSString stringWithFormat:@"%@",model.name_zh];
     winLabel.text=[NSString stringWithFormat:@"%@",model.win];
     drawLabel.text=[NSString stringWithFormat:@"%@",model.draw];
     lostLabel.text=[NSString stringWithFormat:@"%@",model.lost];
     hitLabel.text=[NSString stringWithFormat:@"%@/%@",model.hits,model.miss];
     scoreLabel.text=[NSString stringWithFormat:@"%@",model.score];
+    
 }
 - (void)awakeFromNib {
     // Initialization code

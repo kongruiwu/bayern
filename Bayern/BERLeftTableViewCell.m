@@ -18,17 +18,17 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
-    if (selected) {
+//    if (selected) {
         self.titleLabel.textColor = [UIColor whiteColor];
         self.contentLabel.textColor = [UIColor whiteColor];
         
         self.imgView.image = [UIImage imageNamed:self.selectedIconName];
-    } else {
-        self.titleLabel.textColor = [UIColor colorWithHex:0x999999 alpha:1];
-        self.contentLabel.textColor = [UIColor colorWithHex:0x444444 alpha:1];
-        
-        self.imgView.image = [UIImage imageNamed:self.iconName];
-    }
+//    } else {
+//        self.titleLabel.textColor = [UIColor colorWithHex:0x999999 alpha:1];
+//        self.contentLabel.textColor = [UIColor colorWithHex:0x444444 alpha:1];
+//        
+//        self.imgView.image = [UIImage imageNamed:self.iconName];
+//    }
 }
 
 - (void)initUI {
@@ -37,7 +37,7 @@
     UIView *selectedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.sliderWidth, LeftCellHeight)];
     selectedView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1];
     UIView *redLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, LeftCellHeight)];
-    redLine.backgroundColor = [UIColor colorWithRed:0.9 green:0 blue:0.22 alpha:1];
+    redLine.backgroundColor = COLOR_MAIN_RED;
     [selectedView addSubview:redLine];
     self.selectedBackgroundView = selectedView;
     

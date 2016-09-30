@@ -7,7 +7,7 @@
 //
 
 #import "BERBaseTableViewCell.h"
-
+#import "SearchResultModel.h"
 #define BER_PIC_GAP 10
 #define BER_PIC_TITLELB_H 18
 #define BER_PIC_TIMELB_H 18
@@ -21,5 +21,5 @@
 @property (nonatomic, strong) UIImageView *imgView3;
 
 @property (nonatomic, strong) UILabel *timeLabel;
-
+- (void)updateWithModel:(SearchResultModel *)model;
 @end

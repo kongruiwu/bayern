@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface BERTeamerModel : NSObject
+#import "BaseModel.h"
+@interface BERTeamerModel : BaseModel
 @property(nonatomic,copy) NSString *birthday;
 @property(nonatomic,copy) NSString *birthplace;
 @property(nonatomic,copy) NSString *desc;
@@ -30,4 +30,8 @@
 @property(nonatomic,copy)NSString *title;
 @property(nonatomic,copy) NSString *pic_width;
 @property(nonatomic,copy) NSString *pic_height;
+
+@property (nonatomic, strong) NSArray * teamerTitles;
+@property (nonatomic, strong) NSArray * teamerDescs;
+
 @end
