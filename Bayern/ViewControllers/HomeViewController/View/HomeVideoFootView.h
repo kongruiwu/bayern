@@ -11,7 +11,7 @@
 #import "HomeVideoView.h"
 @protocol HomeVideoFootViewDelegate <NSObject>
 
-- (void)HomeVideoSelctWithModel:(HomdeVideoModel *)model;
+- (void)HomeVideoSelctWithModel:(HomePicModel *)model;
 
 @end
 

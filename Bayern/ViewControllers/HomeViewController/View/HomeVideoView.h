@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Factory.h"
-#import "HomdeVideoModel.h"
+#import "HomePicModel.h"
 @interface HomeVideoView : UIView
 @property (nonatomic, strong) UIImageView * imageView;
-@property (nonatomic, strong) UIImageView * videoIcon;
 @property (nonatomic, strong) UILabel * descLabel;
-@property (nonatomic, strong) HomdeVideoModel * model;
-- (void)updateImageViewWithModel:(HomdeVideoModel *)model;
+@property (nonatomic, strong) HomePicModel * model;
+- (void)updateImageViewWithModel:(HomePicModel *)model;
 @end

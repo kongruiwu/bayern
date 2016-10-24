@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 Wusicong. All rights reserved.
 //
 
-#import "HupuCustomScrollViewController.h"
-#import "BERTeamListViewController.h"
+#import "BERRootViewController.h"
+#import "BERTeamListController.h"
 
-@interface BERTeamViewController : HupuCustomScrollViewController<BERTeamListDelegate>
+@interface BERTeamViewController : BERRootViewController
 
 @end

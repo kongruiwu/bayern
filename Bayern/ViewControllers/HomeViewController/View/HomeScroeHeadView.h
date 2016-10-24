@@ -21,5 +21,5 @@
 @property (nonatomic, strong) UIScrollView * scrollView;
 @property (nonatomic, assign) id<HomeScoreHeadViewDelegate> delegate;
 @property (nonatomic, strong) NSArray * models;
-- (void)updateScrollViewWithArray:(NSArray *)arr;
+- (void)updateScrollViewWithArray:(NSArray *)arr andIndex:(NSInteger)index;
 @end

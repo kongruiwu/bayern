@@ -46,9 +46,9 @@
     self.currentPwdTF.secureTextEntry = YES;
     self.oldPwdTF.secureTextEntry = YES;
     self.surePwdTF.secureTextEntry = YES;
-    self.currentPwdTF.returnKeyType = UIReturnKeyNext;
     self.oldPwdTF.returnKeyType = UIReturnKeyNext;
-    self.currentPwdTF.returnKeyType = UIReturnKeyDone;
+    self.currentPwdTF.returnKeyType = UIReturnKeyNext;
+    self.surePwdTF.returnKeyType = UIReturnKeyDone;
     
     self.currentPwdTF.delegate = self;
     self.oldPwdTF.delegate= self;

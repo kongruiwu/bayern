@@ -78,7 +78,7 @@
     [self.newsButton addTarget:self action:@selector(newsButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.picButton addTarget:self action:@selector(picButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.bottomLine = [Factory creatViewWithColor:COLOR_LINECOLOR];
+    self.bottomLine = [Factory creatViewWithColor:COLOR_CONTENT_GRAY_9];
     [self.contentView addSubview:self.dayTimeLable];
     [self.contentView addSubview:self.homeLabel];
     [self.contentView addSubview:self.homeIcon];

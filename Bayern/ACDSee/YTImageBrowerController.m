@@ -164,7 +164,7 @@
     [[AppDelegate sharedInstance].window addSubview:self.shareView];
 }
 - (void)addScrollView{//添加scrollView
-    self.scrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
+    self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGH)];
     self.scrollView.backgroundColor = [UIColor colorWithHexString:@"000000" alpha:0.9];
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
@@ -246,7 +246,7 @@
 
 - (void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
-    self.scrollView.frame = self.view.bounds;
+    self.scrollView.frame = CGRectMake(0, -64, SCREENWIDTH, SCREENHEIGH);
     
     CGSize size = self.scrollView.bounds.size;
     size.width *= self.imgModels.count;

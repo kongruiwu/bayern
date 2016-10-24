@@ -41,7 +41,7 @@
     self.detailButton.layer.cornerRadius = Anno750(30);
     
     self.infoLabel = [Factory creatLabelWithTitle:@"CCTV  虎扑体育  五星体育"
-                                        textColor:COLOR_CONTENT_GRAY_6 textFont:font750(26)
+                                        textColor:[UIColor whiteColor] textFont:font750(26)
                                     textAlignment:NSTextAlignmentCenter];
     self.newsButton = [Factory creatButtonWithTitle:@"战报"
                                            textFont:font750(30) titleColor:[UIColor whiteColor]
@@ -108,7 +108,7 @@
         make.centerX.equalTo(@0);
     }];
     [self.infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.homeLabel.mas_bottom).offset(Anno750(20));
+        make.top.equalTo(self.homeLabel.mas_bottom).offset(Anno750(40));
         make.centerX.equalTo(@0);
     }];
     [self.detailButton mas_makeConstraints:^(MASConstraintMaker *make) {

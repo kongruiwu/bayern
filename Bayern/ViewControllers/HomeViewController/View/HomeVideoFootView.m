@@ -92,14 +92,14 @@
         videoView.tag = 100+i;
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(videoViewClick:)];
         [videoView addGestureRecognizer:tap];
-        HomdeVideoModel * model = arr[i];
+        HomePicModel * model = arr[i];
         [videoView updateImageViewWithModel:model];
         [self.scrollView addSubview:videoView];
     }
 }
 - (void)videoViewClick:(UITapGestureRecognizer *)sender{
     int tag = (int)sender.view.tag - 100;
-    HomdeVideoModel * model = self.videos[tag];
+    HomePicModel * model = self.videos[tag];
     if ([self.delegate respondsToSelector:@selector(HomeVideoSelctWithModel:)]) {
         [self.delegate HomeVideoSelctWithModel:model];
     }

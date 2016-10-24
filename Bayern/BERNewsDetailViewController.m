@@ -27,6 +27,7 @@
 @property (nonatomic, strong) VoteDetailModel * vote;
 @property (nonatomic, strong) UIImage * shareImage;
 @property (nonatomic, strong) UIImage * shareIamge2;
+@property (nonatomic, assign) int comentNumber;
 @end
 
 @implementation BERNewsDetailViewController
@@ -46,11 +47,11 @@
     if (self.isPictureType) {
         title = @"图片";
     }
-    [self drawTitle:title];
-
     [self drawShareButton];
-    
+    [self drawBackButton];
+    [self drawTitle:title];
     [self initModel];
+    
     [self initDisplay];
     
     //拼接news web view url
@@ -125,9 +126,6 @@
     self.webView.contentMode = UIViewContentModeRedraw;
     self.webView.opaque = YES;
     [self.view addSubview:self.webView];
-
-    
-    
 }
 
 - (void)doShare {
@@ -364,6 +362,8 @@
             self.commentSuccess = YES;
             [self.commentView.textView endEditing:YES];
         }
+        weakSelf.comentNumber  += 1;
+        [weakSelf.commentCount setTitle:[NSString stringWithFormat:@"%d",weakSelf.comentNumber] forState:UIControlStateNormal];
         [weakSelf.view hideLoadWithAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf.view hideLoadWithAnimated:YES];
@@ -411,7 +411,8 @@
         if ([dic[@"code"] integerValue] == 0) {
             NSDictionary * data = dic[@"data"];
             NewsDetailModel * model = [[NewsDetailModel alloc]initWithDictionary:data];
-            [weakSelf.commentCount setTitle:[NSString stringWithFormat:@"%@",model.comment_count] forState:UIControlStateNormal];
+            self.comentNumber = [model.comment_count intValue];
+            [weakSelf.commentCount setTitle:[NSString stringWithFormat:@"%d",self.comentNumber] forState:UIControlStateNormal];
             self.model = model;
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 self.shareImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:model.pic]]];

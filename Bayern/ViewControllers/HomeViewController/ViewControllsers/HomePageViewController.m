@@ -13,7 +13,7 @@
 #import "ScoreTableViewCell.h"
 #import "HomeBannerModel.h"
 #import "HomeAdmoodel.h"
-#import "HomdeVideoModel.h"
+#import "HomePicModel.h"
 #import "HomeTeamerModel.h"
 #import "HomeGameModel.h"
 #import "BERNewsDetailViewController.h"
@@ -31,11 +31,13 @@
 @property (nonatomic, strong) AutoScrollView * bannerView;
 @property (nonatomic, strong) NSMutableArray<HomeBannerModel *> * banners;
 @property (nonatomic, strong) HomeAdmoodel * adModel;
-@property (nonatomic, strong) NSMutableArray<HomdeVideoModel *> * videos;
+@property (nonatomic, strong) NSMutableArray<HomePicModel *> * videos;
 @property (nonatomic, strong) NSMutableArray<HomeTeamerModel *> * teamers;
 @property (nonatomic, strong) NSMutableArray<HomeGameModel *> * games;
 @property (nonatomic, strong) CompleteMessageView * messageView;
 @property (nonatomic, strong) HomeVideoFootView * foot;
+
+@property (nonatomic, assign) NSInteger index;
 
 @end
 
@@ -163,13 +165,13 @@
         [self.tabview reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
-    [manager GET:[BERApiProxy urlWithAction:@"home_data"] parameters:[BERApiProxy paramsWithDataDic:@{} action:@"get_home_video"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[BERApiProxy urlWithAction:@"home_data"] parameters:[BERApiProxy paramsWithDataDic:@{} action:@"get_home_album"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //视频
         NSDictionary * dic = (NSDictionary *)responseObject;
         if (dic[@"code"] && [dic[@"code"] intValue] == 0) {
             NSArray * arr = dic[@"data"];
             for (int i = 0; i<arr.count; i++) {
-                HomdeVideoModel * model = [[HomdeVideoModel alloc]initWithDictionary:arr[i]];
+                HomePicModel * model = [[HomePicModel alloc]initWithDictionary:arr[i]];
                 [self.videos addObject:model];
             }
         }
@@ -183,6 +185,9 @@
             NSArray * arr = dic[@"data"];
             for (int i = 0; i<arr.count; i++) {
                 HomeGameModel * model = [[HomeGameModel alloc]initWithDictionary:arr[i]];
+                if (model.show_default) {
+                    self.index = i;
+                }
                 [self.games addObject:model];
             }
         }
@@ -265,7 +270,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         HomeScroeHeadView * headView = [[HomeScroeHeadView alloc]initWithFrame:CGRectMake(0, 0, SCREENWIDTH, Anno750(340))];
-        [headView updateScrollViewWithArray:self.games];
+        [headView updateScrollViewWithArray:self.games andIndex:self.index];
         headView.delegate = self;
         return headView;
     }
@@ -313,15 +318,19 @@
         [self.navigationController pushViewController:sv animated:YES];
     }
 }
-- (void)HomeVideoSelctWithModel:(HomdeVideoModel *)model{
+- (void)HomeVideoSelctWithModel:(HomePicModel *)model{
     [BERShareModel sharedInstance].shareTitle = model.title;
     [BERShareModel sharedInstance].shareID = [NSString stringWithFormat:@"%@",model.show_id];
     if (model.url && ![model isKindOfClass:[NSNull class]]) {
-        BERVideoPlayerViewController * vc = [[BERVideoPlayerViewController alloc]init];
-        vc.videoUrl = model.url;
-        vc.url = [NSURL URLWithString:model.url];
-        vc.videotitle = model.title;
-        vc.videoiconUrl = model.pic;
+//        BERVideoPlayerViewController * vc = [[BERVideoPlayerViewController alloc]init];
+//        vc.videoUrl = model.url;
+//        vc.url = [NSURL URLWithString:model.url];
+//        vc.videotitle = model.title;
+//        vc.videoiconUrl = model.pic;
+//        [self.navigationController pushViewController:vc animated:YES];
+        YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
+        vc.news_id = [NSString stringWithFormat:@"%@",model.show_id];
+        vc.titleName = model.title;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

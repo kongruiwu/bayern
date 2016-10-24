@@ -29,7 +29,7 @@
     
 }
 - (void)creatUI{
-    self.tabview = [Factory creatTabbleViewWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGH) style:UITableViewStyleGrouped];
+    self.tabview = [Factory creatTabbleViewWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGH - 49) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
     [self.view addSubview:self.tabview];
@@ -111,12 +111,16 @@
         
         BERTeamerModel *model=[[BERTeamerModel alloc]initWithDictionary:dic];
         self.model = model;
+        if (self.isTeamer) {
+            self.model.is_coach = @1;
+        }else{
+            self.model.is_coach = @0;
+        }
         [self.header updateWithModel:self.model];
+        [self creatFooter];
         [self.tabview reloadData];
         [self.view hideLoadWithAnimated:YES];
-        NSLog(@"球员数据解析成功");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"球员数据解析失败");
         [self.view hideLoadWithAnimated:YES];
     }];
 }

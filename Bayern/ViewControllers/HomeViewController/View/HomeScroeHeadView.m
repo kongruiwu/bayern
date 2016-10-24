@@ -63,9 +63,10 @@
         make.height.equalTo(@(Anno750(310)));
     }];
 }
-- (void)updateScrollViewWithArray:(NSArray *)arr{
+- (void)updateScrollViewWithArray:(NSArray *)arr andIndex:(NSInteger)index{
     self.models = arr;
     self.scrollView.contentSize = CGSizeMake(Anno750(590) * arr.count, Anno750(310));
+    self.scrollView.contentOffset = CGPointMake(Anno750(590) * index, Anno750(310));
     for (int i = 0; i<arr.count; i++) {
         HomeScoreView * scoreView = [[HomeScoreView alloc]initWithFrame:CGRectMake(Anno750(590) * i, 0, Anno750(590), Anno750(310))];
         HomeGameModel * model = arr[i];

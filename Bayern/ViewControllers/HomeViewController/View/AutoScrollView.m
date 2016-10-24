@@ -50,7 +50,7 @@
         _pageControl.currentPage = 0;// 分页初始页数为0
         _scrollView.contentOffset = CGPointMake(WINDOW_WIDTH, 0);
         
-        self.descLabel = [Factory creatLabelWithTitle:@"我是描述文字"
+        self.descLabel = [Factory creatLabelWithTitle:@""
                                             textColor:[UIColor whiteColor] textFont:font750(26) textAlignment:NSTextAlignmentLeft];
         [blackView addSubview:self.descLabel];
         [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {

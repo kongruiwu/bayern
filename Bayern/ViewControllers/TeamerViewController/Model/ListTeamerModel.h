@@ -18,4 +18,5 @@
 @property (nonatomic, strong) NSString * pic;
 @property (nonatomic, strong) NSNumber * pic_height;
 @property (nonatomic, strong) NSNumber * pic_width;
+@property (nonatomic, strong) NSString * cate;
 @end

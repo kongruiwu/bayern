@@ -92,7 +92,7 @@
     return label;
 }
 - (void)updateWithModel:(BERTeamerModel *)model{
-    if (model.is_coach) {
+    if ([model.is_coach boolValue]) {
         self.numberLabel.text = [NSString stringWithFormat:@"%@",model.No];
         self.cateLabel.text = model.type;
     }else{

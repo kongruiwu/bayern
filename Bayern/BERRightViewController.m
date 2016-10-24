@@ -145,7 +145,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return self.contentArray.count;
+        return self.contentArray.count - 1;
     }
     return self.teamRanks.count +1;
 }
@@ -163,7 +163,6 @@
     
     if (indexPath.section == 0) {
         static NSString *cellStr = @"cell";
-        
         RootRihtTabViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellStr];
         if (cell == nil) {
             cell = [[RootRihtTabViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];

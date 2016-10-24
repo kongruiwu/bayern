@@ -85,6 +85,8 @@
 		8B663ACD1D772AC70036FDE1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B663AC01D772AC70036FDE1 /* LoginViewController.m */; };
 		8B663AD01D772EBD0036FDE1 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B663ACF1D772EBD0036FDE1 /* BaseViewController.m */; };
 		8B663AD41D77D30D0036FDE1 /* groundImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B663AD31D77D30D0036FDE1 /* groundImage.png */; };
+		8B69F7FD1DAF2A9F004CD900 /* BERTeamListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B69F7FC1DAF2A9F004CD900 /* BERTeamListController.m */; };
+		8B69F8001DAF2BFD004CD900 /* TeamerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B69F7FF1DAF2BFD004CD900 /* TeamerListCell.m */; };
 		8B7E6FD91D9278B000F214C8 /* RootRihtTabViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E6FD81D9278B000F214C8 /* RootRihtTabViewCell.m */; };
 		8B7E6FDC1D92B97D00F214C8 /* TeamRankModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E6FDB1D92B97D00F214C8 /* TeamRankModel.m */; };
 		8B7E702A1D92D97C00F214C8 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E70291D92D97C00F214C8 /* HMSegmentedControl.m */; };
@@ -98,6 +100,7 @@
 		8B7E704E1D93B7C400F214C8 /* toast_success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7E70461D93B7C400F214C8 /* toast_success@2x.png */; };
 		8B7E704F1D93B7C400F214C8 /* ToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E70481D93B7C400F214C8 /* ToastView.m */; };
 		8B7E70591D9442D600F214C8 /* LeftHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7E70581D9442D600F214C8 /* LeftHeadCell.m */; };
+		8B8090F81DB6748900A146A4 /* HomePicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8090F71DB6748900A146A4 /* HomePicModel.m */; };
 		8B90AE521D8EF1B7009ABAF6 /* SearchCateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B90AE511D8EF1B7009ABAF6 /* SearchCateTableViewCell.m */; };
 		8B90AE551D8EF221009ABAF6 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B90AE541D8EF221009ABAF6 /* BaseModel.m */; };
 		8B90AE581D8EF27D009ABAF6 /* SearchCateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B90AE571D8EF27D009ABAF6 /* SearchCateModel.m */; };
@@ -247,8 +250,6 @@
 		E58F61EF1B36BE950020EEA0 /* TOWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F61EE1B36BE950020EEA0 /* TOWebViewController.m */; };
 		E58F61F61B3713F20020EEA0 /* JASidePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F61F31B3713F20020EEA0 /* JASidePanelController.m */; };
 		E58F61F71B3713F20020EEA0 /* UIViewController+JASidePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = E58F61F51B3713F20020EEA0 /* UIViewController+JASidePanel.m */; };
-		E5A85E651B33B9740028A34B /* BERTeamListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A85E641B33B9740028A34B /* BERTeamListViewController.m */; };
-		E5A85E681B33BA1D0028A34B /* BERTeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A85E671B33BA1D0028A34B /* BERTeamCell.m */; };
 		E5BCFE791B439041001ABD34 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BCFE761B439041001ABD34 /* libMobClickLibrary.a */; };
 		E5C4A2811B2BEBC20093251D /* BERNewsPicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C4A2801B2BEBC20093251D /* BERNewsPicCell.m */; };
 		E5C4A2841B2BF78A0093251D /* BERListFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C4A2831B2BF78A0093251D /* BERListFocusView.m */; };
@@ -437,6 +438,10 @@
 		8B663ACE1D772EBD0036FDE1 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		8B663ACF1D772EBD0036FDE1 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		8B663AD31D77D30D0036FDE1 /* groundImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = groundImage.png; path = ../groundImage.png; sourceTree = "<group>"; };
+		8B69F7FB1DAF2A9F004CD900 /* BERTeamListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BERTeamListController.h; sourceTree = "<group>"; };
+		8B69F7FC1DAF2A9F004CD900 /* BERTeamListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BERTeamListController.m; sourceTree = "<group>"; };
+		8B69F7FE1DAF2BFD004CD900 /* TeamerListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamerListCell.h; sourceTree = "<group>"; };
+		8B69F7FF1DAF2BFD004CD900 /* TeamerListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamerListCell.m; sourceTree = "<group>"; };
 		8B7E6FD71D9278B000F214C8 /* RootRihtTabViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootRihtTabViewCell.h; sourceTree = "<group>"; };
 		8B7E6FD81D9278B000F214C8 /* RootRihtTabViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootRihtTabViewCell.m; sourceTree = "<group>"; };
 		8B7E6FDA1D92B97D00F214C8 /* TeamRankModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamRankModel.h; sourceTree = "<group>"; };
@@ -459,6 +464,8 @@
 		8B7E70491D93B7C400F214C8 /* ToastViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastViewDelegate.h; sourceTree = "<group>"; };
 		8B7E70571D9442D600F214C8 /* LeftHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftHeadCell.h; sourceTree = "<group>"; };
 		8B7E70581D9442D600F214C8 /* LeftHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftHeadCell.m; sourceTree = "<group>"; };
+		8B8090F61DB6748900A146A4 /* HomePicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePicModel.h; sourceTree = "<group>"; };
+		8B8090F71DB6748900A146A4 /* HomePicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePicModel.m; sourceTree = "<group>"; };
 		8B90AE501D8EF1B7009ABAF6 /* SearchCateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCateTableViewCell.h; sourceTree = "<group>"; };
 		8B90AE511D8EF1B7009ABAF6 /* SearchCateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCateTableViewCell.m; sourceTree = "<group>"; };
 		8B90AE531D8EF221009ABAF6 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
@@ -739,10 +746,6 @@
 		E58F61F31B3713F20020EEA0 /* JASidePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASidePanelController.m; sourceTree = "<group>"; };
 		E58F61F41B3713F20020EEA0 /* UIViewController+JASidePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+JASidePanel.h"; sourceTree = "<group>"; };
 		E58F61F51B3713F20020EEA0 /* UIViewController+JASidePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+JASidePanel.m"; sourceTree = "<group>"; };
-		E5A85E631B33B9740028A34B /* BERTeamListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BERTeamListViewController.h; sourceTree = "<group>"; };
-		E5A85E641B33B9740028A34B /* BERTeamListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BERTeamListViewController.m; sourceTree = "<group>"; };
-		E5A85E661B33BA1D0028A34B /* BERTeamCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BERTeamCell.h; sourceTree = "<group>"; };
-		E5A85E671B33BA1D0028A34B /* BERTeamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BERTeamCell.m; sourceTree = "<group>"; };
 		E5BCFE761B439041001ABD34 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		E5BCFE771B439041001ABD34 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		E5BCFE781B439041001ABD34 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
@@ -953,6 +956,8 @@
 				8B166F171D9112D700FD02F6 /* TeamerDeatilHeadView.m */,
 				8BBC4AFA1D91213F00793CAD /* TeamerDetailTableViewCell.h */,
 				8BBC4AFB1D91213F00793CAD /* TeamerDetailTableViewCell.m */,
+				8B69F7FE1DAF2BFD004CD900 /* TeamerListCell.h */,
+				8B69F7FF1DAF2BFD004CD900 /* TeamerListCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -964,6 +969,8 @@
 				E515BA4D1B32E94000DB6A33 /* BERTeamViewController.m */,
 				8B5567391B678D4E00689F54 /* BERDetailTeamViewController.h */,
 				8B55673A1B678D4E00689F54 /* BERDetailTeamViewController.m */,
+				8B69F7FB1DAF2A9F004CD900 /* BERTeamListController.h */,
+				8B69F7FC1DAF2A9F004CD900 /* BERTeamListController.m */,
 			);
 			path = ViewControllsers;
 			sourceTree = "<group>";
@@ -1038,6 +1045,8 @@
 				8B166F0A1D9044AA00FD02F6 /* HomeTeamerModel.m */,
 				8B166F0C1D90459E00FD02F6 /* HomeGameModel.h */,
 				8B166F0D1D90459E00FD02F6 /* HomeGameModel.m */,
+				8B8090F61DB6748900A146A4 /* HomePicModel.h */,
+				8B8090F71DB6748900A146A4 /* HomePicModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1647,8 +1656,6 @@
 				E580A0061B25A6FC00F95C72 /* BERNewsListViewController.m */,
 				E580A00B1B25A73100F95C72 /* BERSettingsViewController.h */,
 				E580A00C1B25A73100F95C72 /* BERSettingsViewController.m */,
-				E5A85E631B33B9740028A34B /* BERTeamListViewController.h */,
-				E5A85E641B33B9740028A34B /* BERTeamListViewController.m */,
 				E515BA4F1B32E94F00DB6A33 /* BERShopViewController.h */,
 				E515BA501B32E94F00DB6A33 /* BERShopViewController.m */,
 				8BFE0BA01B69D8EE009EC6F0 /* BERVideoListViewController.h */,
@@ -1684,8 +1691,6 @@
 				E580A0191B25D79700F95C72 /* BERNewsWordsCell.m */,
 				E5C4A27F1B2BEBC20093251D /* BERNewsPicCell.h */,
 				E5C4A2801B2BEBC20093251D /* BERNewsPicCell.m */,
-				E5A85E661B33BA1D0028A34B /* BERTeamCell.h */,
-				E5A85E671B33BA1D0028A34B /* BERTeamCell.m */,
 				E5CB90DD1B3BE23F00E7C655 /* BERAdvCell.h */,
 				E5CB90DE1B3BE23F00E7C655 /* BERAdvCell.m */,
 				8B3F0D1F1B5F287200F27DDA /* BERVideosTableViewCell.h */,
@@ -2148,6 +2153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5809FE41B25663800F95C72 /* UIColor+ColorHex.m in Sources */,
+				8B8090F81DB6748900A146A4 /* HomePicModel.m in Sources */,
 				8B3A208C1D83965C004A7E70 /* IQUIScrollView+Additions.m in Sources */,
 				E515BA551B32EC4600DB6A33 /* HupuCustomScrollViewController.m in Sources */,
 				8BFE0B971B68B350009EC6F0 /* BERTeamerModel.m in Sources */,
@@ -2185,7 +2191,6 @@
 				8B663AC31D772AC70036FDE1 /* MASCompositeConstraint.m in Sources */,
 				E580A0161B25D09D00F95C72 /* BERNetworkManager.m in Sources */,
 				E5809FE51B25663800F95C72 /* UIView+ToastInfo.m in Sources */,
-				E5A85E681B33BA1D0028A34B /* BERTeamCell.m in Sources */,
 				E5809FDC1B2564BF00F95C72 /* NSString+MD5Addition.m in Sources */,
 				8B663AC11D772AC70036FDE1 /* Factory.m in Sources */,
 				E5809FF61B2570F300F95C72 /* BERHomeListViewController.m in Sources */,
@@ -2219,6 +2224,7 @@
 				E5873D5C1B1C5EC9001938CD /* SDWebImageManager.m in Sources */,
 				8BF3A0751D99051C0083D3D1 /* ChangeGenerViewController.m in Sources */,
 				8B7E703F1D93954900F214C8 /* UserInfo.m in Sources */,
+				8B69F7FD1DAF2A9F004CD900 /* BERTeamListController.m in Sources */,
 				5A0291851BDC892E007E01FA /* UIButton+BERButton.m in Sources */,
 				8BFE0BA21B69D8EE009EC6F0 /* BERVideoListViewController.m in Sources */,
 				8BFE0B9A1B68C41F009EC6F0 /* BERVideoPlayerViewController.m in Sources */,
@@ -2239,7 +2245,6 @@
 				E57E0AEE1B3959C100FDBF7D /* NFLShareView.m in Sources */,
 				E5873CBA1B1C3849001938CD /* Bayern.xcdatamodeld in Sources */,
 				8B166F0E1D90459E00FD02F6 /* HomeGameModel.m in Sources */,
-				E5A85E651B33B9740028A34B /* BERTeamListViewController.m in Sources */,
 				E5873D621B1C5EC9001938CD /* UIImageView+HighlightedWebCache.m in Sources */,
 				E580A0101B25C7C000F95C72 /* BERBaseListViewController.m in Sources */,
 				8B344CBC1D870F57009190C3 /* SearchViewController.m in Sources */,
@@ -2257,6 +2262,7 @@
 				E5873D5A1B1C5EC9001938CD /* SDWebImageDownloader.m in Sources */,
 				5A3FA4441CCA162F00ED1AFF /* YTNetworkLoad.m in Sources */,
 				E515BA4E1B32E94000DB6A33 /* BERTeamViewController.m in Sources */,
+				8B69F8001DAF2BFD004CD900 /* TeamerListCell.m in Sources */,
 				5A3FA4431CCA162F00ED1AFF /* YTImageScroll.m in Sources */,
 				8B90AE611D8F04BA009ABAF6 /* HomeAdmoodel.m in Sources */,
 				8B3A208B1D83965C004A7E70 /* IQNSArray+Sort.m in Sources */,
