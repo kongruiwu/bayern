@@ -8,6 +8,7 @@
 
 #import "RegisterViewController.h"
 #import "LogBackGroundView.h"
+#import "WebViewController.h"
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property (nonatomic, strong) UITextField * userName;
 @property (nonatomic, strong) UITextField * email;
@@ -150,7 +151,8 @@
     self.selectBtn.selected = !self.selectBtn.selected;
 }
 - (void)pushToProtocolViewController{
-    
+    WebViewController * web = [[WebViewController alloc]initWithUrl:@"http://www.fcbayern.cn/terms_and_conditions?app=1" andTitle:@"协议详情"];
+    [self.navigationController pushViewController:web animated:YES];
 }
 - (void)userRegistRequest{
     if (self.selectBtn.selected) {

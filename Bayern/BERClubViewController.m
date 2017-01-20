@@ -29,6 +29,7 @@
         self.url=[[NSUserDefaults standardUserDefaults] objectForKey:@"CLUB"];
     }
     [web loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
+    web.scalesPageToFit = YES;
     web.delegate=self;
     [self.view addSubview:web];
 }

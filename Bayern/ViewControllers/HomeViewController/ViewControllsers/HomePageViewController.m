@@ -113,7 +113,7 @@
         vc.isPictureType = NO;
         [self.navigationController pushViewController:vc animated:YES];
     }else if([model.show_type intValue] == 2){
-        BERNewsPictureViewController * vc = [[BERNewsPictureViewController alloc]init];
+        YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
         vc.news_id = [NSString stringWithFormat:@"%@",model.show_id];
         [self.navigationController pushViewController:vc animated:YES];
     }

@@ -7,14 +7,17 @@
 //
 
 #import "AppDelegate.h"
-#import "APService.h"
 #import "BERNewsDetailViewController.h"
 #import "BERNavigationController.h"
 #import "BERVideoPlayerViewController.h"
 #import "BERHeadFile.h"
 #import "YTImageBrowerController.h"
 #import "IQKeyboardManager.h"
-@interface AppDelegate ()
+#import "JPUSHService.h"
+#import <UserNotifications/UserNotifications.h> // 这里是iOS10需要用到的框架
+#define JPUSHKey @"9436c5959a32e18d68a04a33"
+
+@interface AppDelegate ()<JPUSHRegisterDelegate>
 
 @end
 
@@ -28,6 +31,7 @@
     
     [self getUserInfo];
     
+    [self jpushSettingWithDic:launchOptions];
     [self registIQKeyBoard];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -39,34 +43,6 @@
 
     
     [self getConfigInfo];//获取配置信息
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        //categories
-        [APService
-         registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                             UIUserNotificationTypeSound |
-                                             UIUserNotificationTypeAlert)
-         categories:nil];
-    } else {
-        //categories nil
-        [APService
-         registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                             UIRemoteNotificationTypeSound |
-                                             UIRemoteNotificationTypeAlert)
-#else
-         //categories nil
-         categories:nil];
-        [APService
-         registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                             UIRemoteNotificationTypeSound |
-                                             UIRemoteNotificationTypeAlert)
-#endif
-         // Required
-         categories:nil];
-    }
-    //初始化APNS
-    [APService setupWithOption:launchOptions];
-    
     [self.window makeKeyAndVisible];
     self.window.backgroundColor = [UIColor blackColor];
 
@@ -78,25 +54,44 @@
     
     return YES;
 }
+- (void)jpushSettingWithDic:(NSDictionary *)dic{
+    
+    //Required
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+        JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+        entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+        [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    }
+    else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                          UIUserNotificationTypeSound |
+                                                          UIUserNotificationTypeAlert)
+                                              categories:nil];
+    }
+    else {
+        //categories 必须为nil
+        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                          UIRemoteNotificationTypeSound |
+                                                          UIRemoteNotificationTypeAlert)
+                                              categories:nil];
+    }
+    [JPUSHService setupWithOption:dic appKey:JPUSHKey channel:@"appstore" apsForProduction:NO];
+}
 - (void)registIQKeyBoard{
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [IQKeyboardManager sharedManager].shouldShowTextFieldPlaceholder = NO;
 }
 
--(void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler{
-    //根据Item对应的type标识处理对应的点击操作
-    NSString *itemType = shortcutItem.type;
-    if([@"item1" isEqualToString:itemType]){
-        
-    }    
-}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -143,7 +138,6 @@
 }
 - (void)getUserInfo{
     NSNumber * userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
-    NSLog(@"%@",userID);
     if (userID && userID.intValue>0) {
         NSDictionary * params = @{@"uid":[NSString stringWithFormat:@"%@",userID]};
         AFHTTPRequestOperationManager *manger=[AFHTTPRequestOperationManager manager];
@@ -157,8 +151,8 @@
             
         }];
     }
-    
 }
+
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
@@ -283,9 +277,7 @@
     if (managedObjectContext != nil) {
         NSError *error = nil;
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+
             abort();
         }
     }
@@ -336,7 +328,7 @@
 //deviceToken 来源：苹果服务器的返回
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [APService registerDeviceToken:deviceToken];
+    [JPUSHService registerDeviceToken:deviceToken];
     //向服务器上报deviceToken
 }
 
@@ -368,15 +360,88 @@ forRemoteNotification:(NSDictionary *)userInfo
     
 }
 #endif
+#pragma mark - iOS10: 收到推送消息调用(iOS10是通过Delegate实现的回调)
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#pragma mark- JPUSHRegisterDelegate
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    
+//    UNNotificationRequest *request = notification.request; // 收到推送的请求
+//    UNNotificationContent *content = request.content; // 收到推送的消息内容
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+//        //前台收到信息
+//        self.model=[[pushModel alloc]init];
+//        [self.model setValuesForKeysWithDictionary:content.userInfo];
+//        /*type      1 : videos          视频
+//         2 : news            新闻
+//         3 : photos          图集
+//         */
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"最新战况"
+//                                                        message:userInfo[@"aps"][@"alert"]
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"没兴趣"
+//                                              otherButtonTitles:@"去看看", nil];
+//        [alert show];
+
+    }
+
+    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
+}
+
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+    
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    UNNotificationRequest *request = response.notification.request; // 收到推送的请求
+    UNNotificationContent *content = request.content; // 收到推送的消息内容
+    
+    
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+        
+        self.model=[[pushModel alloc]init];
+        [self.model setValuesForKeysWithDictionary:content.userInfo];
+        UIViewController *controller = self.mainViewController.centerPanel;
+        if ([self.model.type intValue]==1||[self.model.type isEqualToString:@"video"]) {
+            if (self.model.url.length>0) {
+                BERVideoPlayerViewController *vc=[[BERVideoPlayerViewController alloc]init];
+                vc.url=[NSURL URLWithString:self.model.url];
+                [NFLAppLogManager sendLogWithEventID:EventID_Videos withKeyName:KN_VideosList andValueName:@"Videos"];
+                [(BERNavigationController *)controller pushViewController:vc animated:NO];
+                [self.mainViewController showCenterPanelAnimated:YES];
+            }
+        }else if ([self.model.type intValue]==2||[self.model.type isEqualToString:@"news"])
+        {
+            BERNewsDetailViewController *vc=[[BERNewsDetailViewController alloc]init];
+            vc.news_id=self.model.id;
+            [NFLAppLogManager sendLogWithEventID:EventID_News withKeyName:KN_NewsList andValueName:@"News"];
+            [(BERNavigationController *)controller pushViewController:vc animated:NO];
+            [self.mainViewController showCenterPanelAnimated:YES];
+        }else if([self.model.type intValue]==3||[self.model.type isEqualToString:@"photos"])
+        {
+            YTImageBrowerController * vc = [[YTImageBrowerController alloc]init];
+            vc.news_id = self.model.id;
+            vc.titleName = @"最新战报";
+            [NFLAppLogManager sendLogWithEventID:EventID_Photos withKeyName:KN_PhotosList andValueName:@"Photos"];
+            [(BERNavigationController *)controller pushViewController:vc animated:NO];
+            [self.mainViewController showCenterPanelAnimated:YES];
+        }
+    }
+
+    
+    completionHandler();  // 系统要求执行这个方法
+}
+#endif
+
 //如果 App状态为正在前台或者后台运行，那么此函数将被调用，并且可通过AppDelegate的applicationState是否为UIApplicationStateActive判断程序是否在前台运行。此种情况在此函数中处理：
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [APService handleRemoteNotification:userInfo];
+    [JPUSHService handleRemoteNotification:userInfo];
 }
 //如果是使用 iOS 7 的 Remote Notification 特性那么处理函数需要使用
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [APService handleRemoteNotification:userInfo];
+    [JPUSHService handleRemoteNotification:userInfo];
     
     //处理收到的APNS消息，向服务器上报收到的APNS消息
     // 应用正处理前台状态下，不会收到推送消息，因此在此处需要额外处理一下
@@ -409,9 +474,6 @@ forRemoteNotification:(NSDictionary *)userInfo
                 [NFLAppLogManager sendLogWithEventID:EventID_Videos withKeyName:KN_VideosList andValueName:@"Videos"];
                 [(BERNavigationController *)controller pushViewController:vc animated:NO];
                 [self.mainViewController showCenterPanelAnimated:YES];
-            }else
-            {
-            
             }
         }else if ([self.model.type intValue]==2||[self.model.type isEqualToString:@"news"])
         {
@@ -428,11 +490,6 @@ forRemoteNotification:(NSDictionary *)userInfo
             [NFLAppLogManager sendLogWithEventID:EventID_Photos withKeyName:KN_PhotosList andValueName:@"Photos"];
             [(BERNavigationController *)controller pushViewController:vc animated:NO];
             [self.mainViewController showCenterPanelAnimated:YES];
-        }
-
-        else
-        {
-            
         }
     }
 }

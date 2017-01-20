@@ -12,6 +12,7 @@
 #import "CommentView.h"
 #import "BERNavigationController.h"
 #import "PrentLoginViewController.h"
+#import "AFLoadingCell.h"
 @interface CommentViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,CommentCellDelegate>
 @property (nonatomic, strong)UITableView * tabview;
 @property (nonatomic, strong) UIView * blackView;
@@ -19,6 +20,9 @@
 @property (nonatomic, strong) CommentView * commentView;
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @property (nonatomic, assign) BOOL commentSuccess;
+
+@property (nonatomic, assign) BOOL needMoreData;
+
 @end
 
 @implementation CommentViewController
@@ -41,7 +45,6 @@
 }
 - (void)creatUI{
     self.dataArray = [[NSMutableArray alloc]init];;
-    
     self.tabview = [Factory creatTabbleViewWithFrame:CGRectMake(0, 0, SCREENWIDTH,SCREENHEIGH - 64 - Anno750(80)) style:UITableViewStyleGrouped];
     self.tabview.delegate = self;
     self.tabview.dataSource = self;
@@ -83,14 +86,29 @@
     self.tabview.tableHeaderView = headView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.needMoreData) {
+        return self.dataArray.count+1;
+    }
     return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == self.dataArray.count && self.needMoreData) {
+        return 50;
+    }
     CommentModel * model = self.dataArray[indexPath.row];
     CGSize size = [Factory getSize:model.content maxSize:CGSizeMake((SCREENWIDTH - Anno750(100)), 99999) font:[UIFont systemFontOfSize:font750(26)]];
     return Anno750(155) + size.height;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == self.dataArray.count) {
+        static NSString * loadCell = @"AFLoadingCell";
+        AFLoadingCell * cell = [tableView dequeueReusableCellWithIdentifier:loadCell];
+        if (cell == nil) {
+            cell = [[AFLoadingCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:loadCell];
+        }
+        [cell.spinner startAnimating];
+        return cell;
+    }
     static NSString * cellID = @"CommentTableViewCell";
     CommentTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil) {
@@ -108,6 +126,17 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 0.001;
 }
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (!self.needMoreData) {
+        return;
+    }
+    if (scrollView == self.tabview) {
+        if (scrollView.contentOffset.y + 50 >= scrollView.contentSize.height - scrollView.frame.size.height) {
+            [self loadCommentList];
+        }
+    }
+}
+
 - (void)creatCommentTextf{
     UIView * footerView = [Factory creatViewWithColor:COLOR_BACKGROUND];
     footerView.frame = CGRectMake(0, SCREENHEIGH - Anno750(80) - 64, SCREENWIDTH, Anno750(80));
@@ -170,12 +199,14 @@
     }
 }
 - (void)commenLikeButtonClick:(UIButton *)btn{
+    
     if ([UserInfo defaultInfo].uid && [[UserInfo defaultInfo].uid intValue]>0) {
-        UITableViewCell * cell = (UITableViewCell *)[[btn superview] superview];
+        UITableViewCell * cell = (UITableViewCell *)[btn superview];
         NSIndexPath * indexpath = [self.tabview indexPathForCell:cell];
         [self likeCommentRequestWithIndexPath:indexpath];
         
     }else{
+        
         [self showLoginMessage];
     }
 }
@@ -184,8 +215,8 @@
     if ([UserInfo defaultInfo].uid && [[UserInfo defaultInfo].uid intValue]>0) {
         [self.commentView startLoading:YES];
         [self addCommentRequest];
-        
     }else{
+        [self.commentView.textView resignFirstResponder];
         [self showLoginMessage];
     }
 }
@@ -272,8 +303,19 @@
 }
 - (void)loadCommentList{
     [self.view showLoadWithAnimated:YES];
+    NSString * idNum = @"";
+    if (self.dataArray.count>0) {
+        CommentModel * model = self.dataArray.lastObject;
+        idNum = [NSString stringWithFormat:@"%@",model.id];
+    }
+    NSString * userID = @"";
+    if ([UserInfo defaultInfo].uid && [[UserInfo defaultInfo].uid longLongValue]>0) {
+        userID = [NSString stringWithFormat:@"%@",[UserInfo defaultInfo].uid];
+    }
     NSDictionary * params = @{
-                            @"nid":self.newsID
+                            @"nid":self.newsID,
+                            @"last_id":idNum,
+                            @"uid":userID
                               };
     
     AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
@@ -292,6 +334,11 @@
                     CommentModel * model = [[CommentModel alloc]initWithDictionary:dic];
                     [weakSelf.dataArray addObject:model];
                 }
+                if (arr.count == 0 || arr.count<10) {
+                    self.needMoreData = NO;
+                }else{
+                    self.needMoreData = YES;
+                }
             }
         }
         [weakSelf.tabview reloadData];
@@ -307,7 +354,7 @@
     [self.view showLoadWithAnimated:YES];
     
     NSDictionary * params = @{
-                              @"cid":[NSString stringWithFormat:@"%@",model.cont_id],
+                              @"cid":[NSString stringWithFormat:@"%@",model.id],
                               @"uid":[NSString stringWithFormat:@"%@",[UserInfo defaultInfo].uid],
                               @"callback_verify":token
                               };

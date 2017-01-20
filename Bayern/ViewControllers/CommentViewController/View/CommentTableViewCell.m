@@ -111,6 +111,7 @@
     self.creatTime.text = timeString;
     [self.likeButton setTitle:[NSString stringWithFormat:@"%@",model.good] forState:UIControlStateNormal];
     self.likeButton.selected = model.gooded;
+
     self.content.text = model.content;
 }
 - (void)liekBtnClick:(UIButton *)btn{

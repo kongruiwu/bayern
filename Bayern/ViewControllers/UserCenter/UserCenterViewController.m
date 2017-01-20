@@ -140,6 +140,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"userID"];
             [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            [UserInfo defaultInfo].uid = nil;
             if (self.isPush) {
                 [self.navigationController popViewControllerAnimated:YES];
             }else{

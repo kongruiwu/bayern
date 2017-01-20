@@ -68,6 +68,7 @@
 		8B3F0D261B5F369300F27DDA /* BERVideosModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3F0D251B5F369300F27DDA /* BERVideosModel.m */; };
 		8B3F0D341B5F744800F27DDA /* BERStandingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3F0D331B5F744800F27DDA /* BERStandingTableViewCell.m */; };
 		8B3F0D371B5F904700F27DDA /* BERStandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3F0D361B5F904700F27DDA /* BERStandModel.m */; };
+		8B3FAEBE1DC09DDB00C17230 /* TagNewsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3FAEBD1DC09DDB00C17230 /* TagNewsListViewController.m */; };
 		8B55672D1B672B5200689F54 /* BERFixtureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55672C1B672B5200689F54 /* BERFixtureTableViewCell.m */; };
 		8B55673B1B678D4E00689F54 /* BERDetailTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B55673A1B678D4E00689F54 /* BERDetailTeamViewController.m */; };
 		8B663AC11D772AC70036FDE1 /* Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B663A9E1D772AC70036FDE1 /* Factory.m */; };
@@ -116,8 +117,13 @@
 		8BBC4AFC1D91213F00793CAD /* TeamerDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBC4AFB1D91213F00793CAD /* TeamerDetailTableViewCell.m */; };
 		8BBC4AFF1D919B7400793CAD /* HomeVideoFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBC4AFE1D919B7400793CAD /* HomeVideoFootView.m */; };
 		8BBC4B021D91A97800793CAD /* HomeScroeHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBC4B011D91A97800793CAD /* HomeScroeHeadView.m */; };
+		8BC8751F1DC1B5ED00FF5E90 /* jpush-ios-2.2.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8751D1DC1B5ED00FF5E90 /* jpush-ios-2.2.0.a */; };
+		8BC875221DC1B7BB00FF5E90 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC875211DC1B7BB00FF5E90 /* libz.tbd */; };
+		8BC875241DC1B7C400FF5E90 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC875231DC1B7C400FF5E90 /* UserNotifications.framework */; };
+		8BC875261DC1B7CB00FF5E90 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC875251DC1B7CB00FF5E90 /* libresolv.tbd */; };
 		8BC99CF51D9CB63700933E8D /* NewsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC99CF41D9CB63700933E8D /* NewsDetailModel.m */; };
 		8BC99CF81D9CC71700933E8D /* VoteDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC99CF71D9CC71700933E8D /* VoteDetailModel.m */; };
+		8BDDACA51DBDFE0A00392B1F /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BDDACA41DBDFE0A00392B1F /* WebViewController.m */; };
 		8BE643D51D8DA24500E782F3 /* HomeScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE643D41D8DA24500E782F3 /* HomeScoreView.m */; };
 		8BEAA4FB1D8071B800188417 /* LogBackGroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEAA4FA1D8071B800188417 /* LogBackGroundView.m */; };
 		8BEAA4FE1D8079F500188417 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEAA4FD1D8079F500188417 /* RegisterViewController.m */; };
@@ -132,7 +138,6 @@
 		8BF00B521B6B22BE00F22344 /* BERClubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF00B511B6B22BE00F22344 /* BERClubViewController.m */; };
 		8BF00B931B6F50BE00F22344 /* BERSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF00B911B6F50BE00F22344 /* BERSettingTableViewCell.m */; };
 		8BF00B941B6F50BE00F22344 /* BERSettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF00B921B6F50BE00F22344 /* BERSettingTableViewCell.xib */; };
-		8BF00B9A1B70A5B300F22344 /* libPushSDK-1.8.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF00B991B70A5B300F22344 /* libPushSDK-1.8.5.a */; };
 		8BF00B9C1B70A6B000F22344 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF00B9B1B70A6B000F22344 /* CoreFoundation.framework */; };
 		8BF00B9E1B70A6E300F22344 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF00B9D1B70A6E300F22344 /* Foundation.framework */; };
 		8BF00BA01B70A7E100F22344 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BF00B9F1B70A7E100F22344 /* PushConfig.plist */; };
@@ -400,6 +405,9 @@
 		8B3F0D331B5F744800F27DDA /* BERStandingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BERStandingTableViewCell.m; sourceTree = "<group>"; };
 		8B3F0D351B5F904700F27DDA /* BERStandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BERStandModel.h; path = ../../../BERStandModel.h; sourceTree = "<group>"; };
 		8B3F0D361B5F904700F27DDA /* BERStandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BERStandModel.m; path = ../../../BERStandModel.m; sourceTree = "<group>"; };
+		8B3FAEBC1DC09DDB00C17230 /* TagNewsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagNewsListViewController.h; sourceTree = "<group>"; };
+		8B3FAEBD1DC09DDB00C17230 /* TagNewsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagNewsListViewController.m; sourceTree = "<group>"; };
+		8B3FAEBF1DC19ED000C17230 /* Bayern.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bayern.entitlements; sourceTree = "<group>"; };
 		8B55672B1B672B5200689F54 /* BERFixtureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BERFixtureTableViewCell.h; sourceTree = "<group>"; };
 		8B55672C1B672B5200689F54 /* BERFixtureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BERFixtureTableViewCell.m; sourceTree = "<group>"; };
 		8B5567391B678D4E00689F54 /* BERDetailTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BERDetailTeamViewController.h; path = ../../../BERDetailTeamViewController.h; sourceTree = "<group>"; };
@@ -495,10 +503,17 @@
 		8BBC4AFE1D919B7400793CAD /* HomeVideoFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVideoFootView.m; sourceTree = "<group>"; };
 		8BBC4B001D91A97800793CAD /* HomeScroeHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeScroeHeadView.h; sourceTree = "<group>"; };
 		8BBC4B011D91A97800793CAD /* HomeScroeHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeScroeHeadView.m; sourceTree = "<group>"; };
+		8BC8751D1DC1B5ED00FF5E90 /* jpush-ios-2.2.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.2.0.a"; sourceTree = "<group>"; };
+		8BC8751E1DC1B5ED00FF5E90 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		8BC875211DC1B7BB00FF5E90 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		8BC875231DC1B7C400FF5E90 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		8BC875251DC1B7CB00FF5E90 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		8BC99CF31D9CB63700933E8D /* NewsDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailModel.h; sourceTree = "<group>"; };
 		8BC99CF41D9CB63700933E8D /* NewsDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailModel.m; sourceTree = "<group>"; };
 		8BC99CF61D9CC71700933E8D /* VoteDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteDetailModel.h; sourceTree = "<group>"; };
 		8BC99CF71D9CC71700933E8D /* VoteDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteDetailModel.m; sourceTree = "<group>"; };
+		8BDDACA31DBDFE0A00392B1F /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		8BDDACA41DBDFE0A00392B1F /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8BE643D31D8DA24500E782F3 /* HomeScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeScoreView.h; sourceTree = "<group>"; };
 		8BE643D41D8DA24500E782F3 /* HomeScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeScoreView.m; sourceTree = "<group>"; };
 		8BEAA4F91D8071B800188417 /* LogBackGroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogBackGroundView.h; sourceTree = "<group>"; };
@@ -526,8 +541,6 @@
 		8BF00B901B6F50BE00F22344 /* BERSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BERSettingTableViewCell.h; sourceTree = "<group>"; };
 		8BF00B911B6F50BE00F22344 /* BERSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BERSettingTableViewCell.m; sourceTree = "<group>"; };
 		8BF00B921B6F50BE00F22344 /* BERSettingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BERSettingTableViewCell.xib; sourceTree = "<group>"; };
-		8BF00B981B70A5B300F22344 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
-		8BF00B991B70A5B300F22344 /* libPushSDK-1.8.5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.5.a"; sourceTree = "<group>"; };
 		8BF00B9B1B70A6B000F22344 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8BF00B9D1B70A6E300F22344 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8BF00B9F1B70A7E100F22344 /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
@@ -765,25 +778,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5873CF71B1C4582001938CD /* QuartzCore.framework in Frameworks */,
-				E5873CDD1B1C449B001938CD /* libz.dylib in Frameworks */,
-				5ACBED201CC8C36F00ECFE28 /* TencentOpenAPI.framework in Frameworks */,
+				8BC875261DC1B7CB00FF5E90 /* libresolv.tbd in Frameworks */,
+				8BC875241DC1B7C400FF5E90 /* UserNotifications.framework in Frameworks */,
+				8BC875221DC1B7BB00FF5E90 /* libz.tbd in Frameworks */,
 				E50FDA3E1B3AAFC60032B08C /* Security.framework in Frameworks */,
 				E5873CF91B1C458D001938CD /* UIKit.framework in Frameworks */,
 				8BF00B9E1B70A6E300F22344 /* Foundation.framework in Frameworks */,
 				E5873CF51B1C4576001938CD /* CoreGraphics.framework in Frameworks */,
-				5ACBED221CC8C36F00ECFE28 /* libSocialWechat.a in Frameworks */,
 				E5873CED1B1C452D001938CD /* SystemConfiguration.framework in Frameworks */,
 				E5873CF11B1C4546001938CD /* CoreTelephony.framework in Frameworks */,
-				5ACBED231CC8C36F00ECFE28 /* libWeChatSDK.a in Frameworks */,
 				8BF00B9C1B70A6B000F22344 /* CoreFoundation.framework in Frameworks */,
 				E5873CF31B1C4567001938CD /* CFNetwork.framework in Frameworks */,
+				E5873CF71B1C4582001938CD /* QuartzCore.framework in Frameworks */,
+				E5873CDD1B1C449B001938CD /* libz.dylib in Frameworks */,
+				5ACBED201CC8C36F00ECFE28 /* TencentOpenAPI.framework in Frameworks */,
+				5ACBED221CC8C36F00ECFE28 /* libSocialWechat.a in Frameworks */,
+				8BC8751F1DC1B5ED00FF5E90 /* jpush-ios-2.2.0.a in Frameworks */,
+				5ACBED231CC8C36F00ECFE28 /* libWeChatSDK.a in Frameworks */,
 				E5873CEF1B1C4538001938CD /* libiconv.dylib in Frameworks */,
 				5ACBED1D1CC8C36F00ECFE28 /* libWeiboSDK.a in Frameworks */,
 				E50FDA3C1B3AAE9F0032B08C /* ImageIO.framework in Frameworks */,
 				5ACBED1F1CC8C36F00ECFE28 /* libSocialQQ.a in Frameworks */,
 				5ACBED1C1CC8C36F00ECFE28 /* libSocialSinaSSO.a in Frameworks */,
-				8BF00B9A1B70A5B300F22344 /* libPushSDK-1.8.5.a in Frameworks */,
 				E5873CEB1B1C451D001938CD /* libsqlite3.dylib in Frameworks */,
 				E5873CE91B1C4511001938CD /* libstdc++.6.dylib in Frameworks */,
 				E5873CE71B1C44FE001938CD /* libstdc++.dylib in Frameworks */,
@@ -1211,6 +1227,39 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		8B3FAEB81DC09DBE00C17230 /* TagNewsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8B3FAEB91DC09DBE00C17230 /* Model */,
+				8B3FAEBA1DC09DBE00C17230 /* View */,
+				8B3FAEBB1DC09DBE00C17230 /* ViewControllsers */,
+			);
+			path = TagNewsViewController;
+			sourceTree = "<group>";
+		};
+		8B3FAEB91DC09DBE00C17230 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8B3FAEBA1DC09DBE00C17230 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8B3FAEBB1DC09DBE00C17230 /* ViewControllsers */ = {
+			isa = PBXGroup;
+			children = (
+				8B3FAEBC1DC09DDB00C17230 /* TagNewsListViewController.h */,
+				8B3FAEBD1DC09DDB00C17230 /* TagNewsListViewController.m */,
+			);
+			path = ViewControllsers;
+			sourceTree = "<group>";
+		};
 		8B663A9C1D772AC70036FDE1 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -1261,6 +1310,8 @@
 		8B663ABB1D772AC70036FDE1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8B3FAEB81DC09DBE00C17230 /* TagNewsViewController */,
+				8BDDAC9F1DBDFDE600392B1F /* WebViewController */,
 				8B7E70351D92F1FD00F214C8 /* GameScoreViewController */,
 				8B7E702B1D92E38600F214C8 /* ScheduleViewController */,
 				8B166F0F1D91124500FD02F6 /* TeamerViewController */,
@@ -1410,6 +1461,25 @@
 			path = resource;
 			sourceTree = "<group>";
 		};
+		8BC8751C1DC1B5ED00FF5E90 /* Jpush2.2 */ = {
+			isa = PBXGroup;
+			children = (
+				8BC8751D1DC1B5ED00FF5E90 /* jpush-ios-2.2.0.a */,
+				8BC8751E1DC1B5ED00FF5E90 /* JPUSHService.h */,
+			);
+			path = Jpush2.2;
+			sourceTree = "<group>";
+		};
+		8BC875201DC1B7BA00FF5E90 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8BC875251DC1B7CB00FF5E90 /* libresolv.tbd */,
+				8BC875231DC1B7C400FF5E90 /* UserNotifications.framework */,
+				8BC875211DC1B7BB00FF5E90 /* libz.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8BDB52781D856BBC003E2EC3 /* MainRootViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1459,6 +1529,39 @@
 			path = ViewControllsers;
 			sourceTree = "<group>";
 		};
+		8BDDAC9F1DBDFDE600392B1F /* WebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8BDDACA01DBDFDE600392B1F /* Model */,
+				8BDDACA11DBDFDE600392B1F /* View */,
+				8BDDACA21DBDFDE600392B1F /* ViewControllsers */,
+			);
+			path = WebViewController;
+			sourceTree = "<group>";
+		};
+		8BDDACA01DBDFDE600392B1F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8BDDACA11DBDFDE600392B1F /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8BDDACA21DBDFDE600392B1F /* ViewControllsers */ = {
+			isa = PBXGroup;
+			children = (
+				8BDDACA31DBDFE0A00392B1F /* WebViewController.h */,
+				8BDDACA41DBDFE0A00392B1F /* WebViewController.m */,
+			);
+			path = ViewControllsers;
+			sourceTree = "<group>";
+		};
 		8BEAA4F61D80717A00188417 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1493,15 +1596,6 @@
 				8BFA79611D9BABB300DA8928 /* PrentRegisterViewController.m */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		8BF00B971B70A5B300F22344 /* Jpush */ = {
-			isa = PBXGroup;
-			children = (
-				8BF00B981B70A5B300F22344 /* APService.h */,
-				8BF00B991B70A5B300F22344 /* libPushSDK-1.8.5.a */,
-			);
-			path = Jpush;
 			sourceTree = "<group>";
 		};
 		8BFA21981D7AA02D00D053C7 /* UserCenter */ = {
@@ -1719,6 +1813,7 @@
 				E5873CB01B1C3849001938CD /* Bayern */,
 				E5873CCD1B1C3849001938CD /* BayernTests */,
 				E5873CAF1B1C3849001938CD /* Products */,
+				8BC875201DC1B7BA00FF5E90 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1734,6 +1829,7 @@
 		E5873CB01B1C3849001938CD /* Bayern */ = {
 			isa = PBXGroup;
 			children = (
+				8B3FAEBF1DC19ED000C17230 /* Bayern.entitlements */,
 				E5873CB51B1C3849001938CD /* AppDelegate.h */,
 				E5873CB61B1C3849001938CD /* AppDelegate.m */,
 				8B663ABC1D772AC70036FDE1 /* BasicViewController */,
@@ -1811,12 +1907,12 @@
 		E5873CFC1B1C5DC2001938CD /* ThirdPart */ = {
 			isa = PBXGroup;
 			children = (
+				8BC8751C1DC1B5ED00FF5E90 /* Jpush2.2 */,
 				8B7E70401D93B7C400F214C8 /* ToastView */,
 				8B7E70271D92D97C00F214C8 /* HMSegmentedControl */,
 				5A3FA4351CCA162F00ED1AFF /* ACDSee */,
 				5A3309941B5E130500715638 /* UIColor+tools.h */,
 				5A3309951B5E130500715638 /* UIColor+tools.m */,
-				8BF00B971B70A5B300F22344 /* Jpush */,
 				E50FD9ED1B3A510C0032B08C /* Umeng */,
 				E58F61F11B3713F20020EEA0 /* JASidePanels */,
 				E58F61E31B36BE340020EEA0 /* TOWebViewController */,
@@ -2067,10 +2163,13 @@
 				TargetAttributes = {
 					E5873CAD1B1C3849001938CD = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = JY5X7GG4HU;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = NB2DZJ5Z8T;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -2226,6 +2325,7 @@
 				8B7E703F1D93954900F214C8 /* UserInfo.m in Sources */,
 				8B69F7FD1DAF2A9F004CD900 /* BERTeamListController.m in Sources */,
 				5A0291851BDC892E007E01FA /* UIButton+BERButton.m in Sources */,
+				8B3FAEBE1DC09DDB00C17230 /* TagNewsListViewController.m in Sources */,
 				8BFE0BA21B69D8EE009EC6F0 /* BERVideoListViewController.m in Sources */,
 				8BFE0B9A1B68C41F009EC6F0 /* BERVideoPlayerViewController.m in Sources */,
 				8B344CD51D884CC5009190C3 /* HomePageViewController.m in Sources */,
@@ -2260,6 +2360,7 @@
 				8BC99CF81D9CC71700933E8D /* VoteDetailModel.m in Sources */,
 				8B90AE5B1D8EFBFA009ABAF6 /* HotSearcherTableViewCell.m in Sources */,
 				E5873D5A1B1C5EC9001938CD /* SDWebImageDownloader.m in Sources */,
+				8BDDACA51DBDFE0A00392B1F /* WebViewController.m in Sources */,
 				5A3FA4441CCA162F00ED1AFF /* YTNetworkLoad.m in Sources */,
 				E515BA4E1B32E94000DB6A33 /* BERTeamViewController.m in Sources */,
 				8B69F8001DAF2BFD004CD900 /* TeamerListCell.m in Sources */,
@@ -2480,10 +2581,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yang Yang (6Q3A638PWE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = JY5X7GG4HU;
+				CODE_SIGN_ENTITLEMENTS = Bayern/Bayern.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Benjamin Steen (8YD7F3S8U5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = NB2DZJ5Z8T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2516,15 +2617,16 @@
 					"$(PROJECT_DIR)/Bayern/Jpush",
 					"$(SRCROOT)/Jpush",
 					"$(PROJECT_DIR)/Bayern/UMSocial_Sdk_5.0.1",
+					"$(PROJECT_DIR)/Bayern/Jpush2.2",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hupu.Bayern;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hupu.fcb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "2dd64a23-50b0-4c06-8d30-0abfced49312";
+				PROVISIONING_PROFILE_SPECIFIER = hupu_bayern_distribution;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2534,10 +2636,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Yang Yang (6Q3A638PWE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = JY5X7GG4HU;
+				CODE_SIGN_ENTITLEMENTS = Bayern/Bayern.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: FC Bayern Muenchen AG (NB2DZJ5Z8T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = NB2DZJ5Z8T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2570,15 +2672,16 @@
 					"$(PROJECT_DIR)/Bayern/Jpush",
 					"$(SRCROOT)/Jpush",
 					"$(PROJECT_DIR)/Bayern/UMSocial_Sdk_5.0.1",
+					"$(PROJECT_DIR)/Bayern/Jpush2.2",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hupu.Bayern;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hupu.fcb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "3f5c9f40-4b98-4ae7-9200-4235644cc6ca";
+				PROVISIONING_PROFILE_SPECIFIER = hupu_bayern_appstore_distrb;
 				SDKROOT = iphoneos;
 			};
 			name = Release;

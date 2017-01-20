@@ -27,5 +27,6 @@
 @property (nonatomic, strong) NSString * home_logo;
 @property (nonatomic, strong) NSString * away_logo;
 @property (nonatomic, strong) NSString * league_title;
+
 @property (nonatomic, assign) BOOL  show_default;
 @end

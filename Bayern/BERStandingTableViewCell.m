@@ -21,7 +21,7 @@
 -(void)creatUI
 {
     for (int i=0; i<3; i++) {
-        UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0+SCREENWIDTH/3*i,0, SCREENWIDTH/3, 44)];
+        UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0+SCREENWIDTH/3*i,0, SCREENWIDTH/3, Anno750(88))];
         view.tag=1200+i;
         [self.contentView addSubview:view];
     }
@@ -30,24 +30,24 @@
     secondView= (UIView *)[self.contentView viewWithTag:1201];
     thirdView = (UIView *)[self.contentView viewWithTag:1202];
     
-    rankLabel =[[UILabel alloc]initWithFrame:CGRectMake(10, 15, 15, 20)];
-    rankLabel.font=[UIFont systemFontOfSize:12.0f];
+    rankLabel =[[UILabel alloc]initWithFrame:CGRectMake(10, Anno750(30), 15, Anno750(40))];
+    rankLabel.font=[UIFont systemFontOfSize:font750(24)];
     rankLabel.textColor=[UIColor colorWithHexString:@"444444"];
     rankLabel.textAlignment=NSTextAlignmentCenter;
     [fristView addSubview:rankLabel];
     
-    iconImg = [[UIImageView alloc]initWithFrame:CGRectMake(rankLabel.frame.origin.x+rankLabel.frame.size.width+10, 15, 20, 20)];
+    iconImg = [[UIImageView alloc]initWithFrame:CGRectMake(rankLabel.frame.origin.x+rankLabel.frame.size.width+Anno750(20), Anno750(30), 20, Anno750(40))];
     [fristView addSubview:iconImg];
     
-    nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(iconImg.frame.size.width+iconImg.frame.origin.x+10, 15, fristView.frame.size.width-iconImg.frame.size.width-iconImg.frame.origin.x, 20)];
-    nameLabel.font=[UIFont systemFontOfSize:12.0f];
+    nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(iconImg.frame.size.width+iconImg.frame.origin.x+Anno750(20), Anno750(30), fristView.frame.size.width-iconImg.frame.size.width-iconImg.frame.origin.x, Anno750(40))];
+    nameLabel.font=[UIFont systemFontOfSize:Anno750(24)];
     nameLabel.textColor=[UIColor colorWithHexString:@"444444"];
     [fristView addSubview:nameLabel];
     
     for (int i=0; i<3; i++) {
-        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0+i*secondView.frame.size.width/3, 15, secondView.frame.size.width/3, 20)];
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0+i*secondView.frame.size.width/3, Anno750(30), secondView.frame.size.width/3, Anno750(40))];
         label.textAlignment=NSTextAlignmentCenter;
-        label.font=[UIFont systemFontOfSize:12.0f];
+        label.font=[UIFont systemFontOfSize:Anno750(24)];
         label.textColor=[UIColor colorWithHexString:@"444444"];
         label.tag=1110+i;
         [secondView addSubview:label];
@@ -57,9 +57,9 @@
     lostLabel=(UILabel *)[self.contentView viewWithTag:1112];
     
     for (int i=0; i<2; i++) {
-        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0+i*thirdView.frame.size.width/2, 15, thirdView.frame.size.width/2, 20)];
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0+i*thirdView.frame.size.width/2, Anno750(30), thirdView.frame.size.width/2, Anno750(40))];
         label.textAlignment=NSTextAlignmentCenter;
-        label.font=[UIFont systemFontOfSize:12.0f];
+        label.font=[UIFont systemFontOfSize:Anno750(24)];
         label.textColor=[UIColor colorWithHexString:@"444444"];
         label.tag=1120+i;
         [thirdView addSubview:label];
@@ -67,7 +67,7 @@
     hitLabel = (UILabel *)[self.contentView viewWithTag:1120];
     scoreLabel = (UILabel *)[self.contentView viewWithTag:1121];
     
-    lineView=[[UIView alloc]initWithFrame:CGRectMake(10, 49, SCREENWIDTH-20, 1)];
+    lineView=[[UIView alloc]initWithFrame:CGRectMake(Anno750(20), Anno750(98), SCREENWIDTH-20, 1)];
     lineView.backgroundColor=[UIColor colorWithHexString:@"eeeeee"];
     [self addSubview:lineView];
 }

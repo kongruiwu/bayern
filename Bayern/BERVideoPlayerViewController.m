@@ -44,7 +44,7 @@
 - (void)didSelectSocialPlatform:(NSString *)platformName withSocialData:(UMSocialData *)socialData {
     NSString *videoUrl =[BERShareModel sharedInstance].shareUrl;
     socialData.urlResource.url = videoUrl;
-    
+    [BERShareModel sharedInstance].shareTitle =self.videotitle;
     NSString *title = [BERShareModel sharedInstance].shareTitle;
     
     if (platformName == UMShareToSina) {

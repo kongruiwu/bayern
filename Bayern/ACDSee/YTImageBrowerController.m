@@ -118,6 +118,8 @@
     [manager GET:[BERApiProxy urlWithAction:@"album"] parameters:[BERApiProxy paramsWithDataDic:params action:@"get_detail"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = (NSDictionary *)responseObject;
         if ([dic[@"code"] integerValue] == 0) {
+            NSDictionary * titleDic = dic[@"info"];
+            self.titleName = titleDic[@"album_title"];
             NSArray * dataArr = dic[@"data"];
             NSMutableArray * urls = [[NSMutableArray alloc]init];
             for (int i = 0; i<dataArr.count; i++) {
@@ -464,7 +466,7 @@
 - (void)shareButtonDidClickWithType:(ShareType)ShareType {
     
     NSArray *shareArr = nil;
-    
+    [BERShareModel sharedInstance].shareTitle = self.titleName;
     //设置分享内容
     UIImage *shareImage = [BERShareModel sharedInstance].shareImg;
     

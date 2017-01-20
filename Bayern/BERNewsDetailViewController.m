@@ -15,6 +15,7 @@
 #import "CommentView.h"
 #import "NewsDetailModel.h"
 #import "VoteDetailModel.h"
+#import "TagNewsListViewController.h"
 @interface BERNewsDetailViewController () <UIWebViewDelegate, UMSocialUIDelegate,UITextViewDelegate>
 
 @property (nonatomic, strong) UIWebView *webView;
@@ -136,10 +137,7 @@
     [self setShareDataWithNews:NO];
     [[AppDelegate sharedInstance].window addSubview:self.shareView];
 }
-#pragma mark - Request 
-
-
-
+#pragma mark - Request
 
 - (void)setShareDataWithNews:(BOOL)rec{
     if (rec) {
@@ -182,6 +180,19 @@
             [self presentViewController:nvc animated:YES completion:nil];
         }else if([requestString containsString:@"news_more_commnet"]){
             [self pushTocommentViewController];
+        }else if([requestString containsString:@"tag_news_list"]){
+            NSString * string = [requestString stringByReplacingOccurrencesOfString:@"}" withString:@""];
+            NSString * string1 = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
+            NSArray * arr = [string1 componentsSeparatedByString:@"&"];
+            for (NSString * str in arr) {
+                if ([str containsString:@"tag_id"]) {
+                    NSArray * params = [str componentsSeparatedByString:@"="];
+                    TagNewsListViewController * vc = [[TagNewsListViewController alloc]init];
+                    NSString * tagStr = params.lastObject;
+                    vc.tag_id = tagStr;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
         }
         return NO;
     }
@@ -325,11 +336,13 @@
 }
 
 - (void)commitComment{
+    
     if ([UserInfo defaultInfo].uid && [[UserInfo defaultInfo].uid intValue]>0) {
         [self.commentView startLoading:YES];
         [self addCommentRequest];
         
     }else{
+        [self.commentView.textView resignFirstResponder];
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"登陆提示" message:@"你好，请登陆后发表你的回复，我们期待你参与讨论！" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction * login = [UIAlertAction actionWithTitle:@"登陆" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             BERNavigationController * nav = [[BERNavigationController alloc]initWithRootViewController:[PrentLoginViewController new]];
